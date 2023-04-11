@@ -4,7 +4,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { LinkContainer } from "react-router-bootstrap";
 
-const AppNavbar = () => (
+const DebugNavbar = () => (
   <Navbar variant={"dark"} bg={"primary"}>
     <Container>
       <Navbar.Brand>IO IO IO</Navbar.Brand>
@@ -27,4 +27,4 @@ const AppNavbar = () => (
   </Navbar>
 );
 
-export default AppNavbar;
+export default DebugNavbar;
