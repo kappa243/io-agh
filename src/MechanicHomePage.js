@@ -16,7 +16,7 @@ const MechanicHomePage = () => (
         <Button>Wyloguj</Button>
       </Container>
     </Navbar>
-    <Container className="pt-3">
+    <Container fluid className="mt-3">
       <Row>
         <Col xs="7">
           <OrderListItem />
