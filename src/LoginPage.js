@@ -26,7 +26,7 @@ const LoginPage = () => {
   return (
     <Container>
       <Row className="justify-content-center">
-        <Col xs="auto">
+        <Col md="8" lg="6" xl="5" xxl="4">
           <Form className="mt-4 border p-4 rounded-4 opacity-2" onSubmit={onSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>
