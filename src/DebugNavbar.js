@@ -5,7 +5,7 @@ import Nav from "react-bootstrap/Nav";
 import { LinkContainer } from "react-router-bootstrap";
 
 const DebugNavbar = () => (
-  <Navbar variant={"dark"} bg={"primary"}>
+  <Navbar>
     <Container>
       <Navbar.Brand>IO IO IO</Navbar.Brand>
       <Navbar.Text>Debug only navbar</Navbar.Text>
