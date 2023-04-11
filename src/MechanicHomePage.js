@@ -6,6 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import OrderListItem from "./OrderListItem";
 import OrderDetails from "./OrderDetails";
+import AddOrder from "./AddOrder";
 
 const MechanicHomePage = () => (
   <>
@@ -24,7 +25,9 @@ const MechanicHomePage = () => (
           <OrderListItem />
         </Col>
         <Col>
+          <p>Tutaj ma się pokazywać albo jedno albo drugie</p>
           <OrderDetails />
+          <AddOrder />
         </Col>
       </Row>
     </Container>
