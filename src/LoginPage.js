@@ -22,12 +22,18 @@ const LoginPage = () => {
     const password = e.target.elements[1].value;
     signInWithEmailAndPassword(email, password);
   }, []);
-  
+
   return (
-    <Container>
-      <Row className="justify-content-center">
+    <Container fluid style={{
+      backgroundImage: "url(/bg.jpg)",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
+      backgroundSize: "cover" }}>
+      <Row className="vh-100 justify-content-center align-items-center">
         <Col md="8" lg="6" xl="5" xxl="4">
-          <Form className="mt-4 border p-4 rounded-4 opacity-2" onSubmit={onSubmit}>
+          <Form className="text-light bg-dark border p-4 rounded-4 bg-opacity-75" onSubmit={onSubmit}>
+            <h1 className="mb-3 text-center">IO IO IO</h1>
+
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control type="email" placeholder="ten ze studentem" />
