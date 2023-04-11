@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import OrderListItem from "./OrderListItem";
+import OrderDetails from "./OrderDetails";
 
 const MechanicHomePage = () => (
   <>
@@ -15,7 +16,7 @@ const MechanicHomePage = () => (
         <Button>Wyloguj</Button>
       </Container>
     </Navbar>
-    <Container>
+    <Container className="pt-3">
       <Row>
         <Col xs="7">
           <OrderListItem />
@@ -23,7 +24,7 @@ const MechanicHomePage = () => (
           <OrderListItem />
         </Col>
         <Col>
-          <p>Tu pojawi się info</p>
+          <OrderDetails />
         </Col>
       </Row>
     </Container>
