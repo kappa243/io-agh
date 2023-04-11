@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 
 import App from "./App";
+import ProtectedRoute from "./ProtectedRoute";
 import LoginPage from "./LoginPage";
 import MechanicHomePage from "./MechanicHomePage";
 import ClientOrderPage from "./ClientOrderPage";
@@ -28,7 +29,11 @@ const router = createBrowserRouter([
       },
       {
         path: "mechanic/home",
-        element: <MechanicHomePage />,
+        element: (
+          <ProtectedRoute permissionLevel="MECHANIC">
+            <MechanicHomePage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "client/order",
