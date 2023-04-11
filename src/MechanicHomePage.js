@@ -1,10 +1,10 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
 
-const LoginPage = () => (
+const MechanicHomePage = () => (
   <Container>
-    <h1>IO IO IO</h1>
+    <h1>MECHANIC HOME PAGE</h1>
   </Container>
 );
 
-export default LoginPage;
+export default MechanicHomePage;

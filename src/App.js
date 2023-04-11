@@ -1,11 +1,11 @@
 import React from "react";
 import AppNavbar from "./AppNavbar";
-import LoginPage from "./LoginPage";
+import { Outlet } from "react-router-dom";
 
 const App = () => (
   <>
     <AppNavbar />
-    <LoginPage />
+    <Outlet />
   </>
 );
 
