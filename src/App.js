@@ -1,10 +1,10 @@
 import React from "react";
-import AppNavbar from "./AppNavbar";
 import { Outlet } from "react-router-dom";
+import DebugNavbar from "./DebugNavbar";
 
 const App = () => (
   <>
-    <AppNavbar />
+    <DebugNavbar />
     <Outlet />
   </>
 );
