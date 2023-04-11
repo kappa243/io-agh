@@ -15,7 +15,7 @@ const StatusPill = ({ status }) => {
   );
 };
 
-const OrderListItem = () => {
+const OrderListItem = ({ onClick }) => {
   const order = {
     carName: "Fiat 126p",
     year: 1980,
@@ -27,7 +27,7 @@ const OrderListItem = () => {
   };
 
   return (
-    <Card>
+    <Card onClick={onClick}>
       <Card.Body>
         <Row>
           <Col>
