@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import OrderListItem from "./OrderListItem";
 import OrderDetails from "./OrderDetails";
 import AddOrder from "./AddOrder";
+import useOrderList from "./logic/useOrderList";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "./logic/fb";
 
@@ -25,7 +26,10 @@ const MechanicHomePage = () => {
     setAddOrderVisible(true);
   }, []);
 
-  const [signOut,,] = useSignOut(auth);
+  const [signOut, ,] = useSignOut(auth);
+
+  const orders = useOrderList();
+  console.log(orders);
 
   return (
     <>
@@ -39,13 +43,16 @@ const MechanicHomePage = () => {
       <Container fluid className="mt-3">
         <Row>
           <Col xs="7">
-            <OrderListItem onClick={() => handleSelectOrder("xd")} />
-            <OrderListItem onClick={() => handleSelectOrder("xd")} />
-            <OrderListItem onClick={() => handleSelectOrder("xd")} />
-            <OrderListItem onClick={() => handleSelectOrder("xd")} />
+            {orders.map((order) => (
+              <OrderListItem
+                key={order.id}
+                order={order}
+                onClick={() => handleSelectOrder(order)}
+              />
+            ))}
           </Col>
           <Col>
-            {selectedOrder && <OrderDetails />}
+            {selectedOrder && <OrderDetails order={selectedOrder} />}
             {addOrderVisible && <AddOrder />}
           </Col>
         </Row>

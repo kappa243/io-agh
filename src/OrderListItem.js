@@ -3,41 +3,28 @@ import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Badge from "react-bootstrap/Badge";
+import daysUntil from "./utils/dateConverter";
+import { orderStatusColor, orderStatusText } from "./model/order";
 
 const StatusPill = ({ status }) => {
-  const statusToColor = {
-    AWAITING_PARTS: "warning",
-    IN_PROGRESS: "primary",
-    DONE: "success",
-  };
-
   return (
-    <span className={`badge bg-${statusToColor[status]}`}>{status}</span>
+    <span className={`badge bg-${orderStatusColor[status]}`}>{orderStatusText[status]}</span>
   );
 };
 
-const OrderListItem = ({ onClick }) => {
-  const order = {
-    carName: "Veryyyy long Fiat 126p",
-    year: 1980,
-    customerName: "Jan Kowalski",
-    cost: 1000.00,
-    profit: 500.00,
-    status: "AWAITING_PARTS",
-    dueDate: "2020-12-12",
-  };
+const OrderListItem = ({ order, onClick }) => {
 
   return (
-    <Card onClick={onClick} className="mt-3">
+    <Card onClick={onClick} className="mb-3" style={{cursor: "pointer"}} >
       <Card.Body>
-        <Row>
+        <Row className="align-items-center">
           <Col xs={4}>
             <Card.Title>{order.carName}</Card.Title>
             <Card.Subtitle className="text-muted">{order.year}</Card.Subtitle>
           </Col>
-          
+
           <Col xs={2}>
-            <Card.Text>{order.customerName}</Card.Text>
+            <Card.Text>{order.clientName}</Card.Text>
           </Col>
 
           <Col xs={2} className="d-flex flex-column align-items-start">
@@ -46,21 +33,23 @@ const OrderListItem = ({ onClick }) => {
               <p className="mb-0">PLN</p>
             </div>
             <div className="d-flex justify-content-between w-100 gap-2">
-              <Card.Text>{Number(order.profit).toFixed(2)}</Card.Text>
-              <p>PLN</p>
+              <Card.Text className="mb-0">{Number(order.profit).toFixed(2)}</Card.Text>
+              <p className="mb-0">PLN</p>
             </div>
           </Col>
 
-          <Col xs={2}>
+          <Col className="text-center" xs={2}>
             <StatusPill status={order.status} />
           </Col>
 
           <Col xs={2}>
-            <Card.Text>{order.dueDate}</Card.Text>
+            <Card.Text>{order.dueDate.toDate().toLocaleDateString("pl-PL")}</Card.Text>
           </Col>
         </Row>
       </Card.Body>
-      <Badge pill className="bg-danger position-absolute top-100 start-100 translate-middle">2d</Badge>
+      <Badge pill className="bg-danger position-absolute top-100 start-100 translate-middle">
+        {daysUntil(order.dueDate.toDate()) + "d"}
+      </Badge>
     </Card>
   );
 };
