@@ -5,12 +5,24 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth } from "./logic/fb";
 
 const LoginPage = () => {
+  const [
+    signInWithEmailAndPassword,
+    user,
+    loading,
+    error,
+  ] = useSignInWithEmailAndPassword(auth);
+
   const onSubmit = useCallback(e => {
     e.preventDefault();
+    const email = e.target.elements[0].value;
+    const password = e.target.elements[1].value;
+    signInWithEmailAndPassword(email, password);
   }, []);
-
+  
   return (
     <Container>
       <Row className="justify-content-center">
@@ -29,6 +41,14 @@ const LoginPage = () => {
             <Button variant="primary" type="submit">
               Zaloguj
             </Button>
+ 
+            {loading ? (
+              <p className="mt-3">Ładowanie...</p>
+            ) : error ? (
+              <p className="mt-3 text-danger">{error.message}</p>
+            ) : user ? (
+              <p className="mt-3">Zalogowano</p>
+            ) : null}
           </Form>
         </Col>
       </Row>
