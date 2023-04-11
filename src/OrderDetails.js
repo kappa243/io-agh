@@ -1,5 +1,8 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 
 const OrderDetails = () => {
   const order = {
@@ -22,8 +25,15 @@ const OrderDetails = () => {
   return (
     <Card>
       <Card.Header>
-        <Card.Title>{order.carName}</Card.Title>
-        <Card.Subtitle className="text-muted">{order.year}</Card.Subtitle>
+        <Row className="align-items-center">
+          <Col>
+            <Card.Title>{order.carName}</Card.Title>
+            <Card.Subtitle className="text-muted">{order.year}</Card.Subtitle>
+          </Col>
+          <Col>
+            <Button className="float-end">Edytuj</Button>
+          </Col>
+        </Row>
       </Card.Header>
       <Card.Body>
         <Card.Text>
