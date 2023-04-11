@@ -8,10 +8,10 @@ import OrderListItem from "./OrderListItem";
 
 const MechanicHomePage = () => (
   <>
-    <Navbar>
+    <Navbar bg="primary">
       <Container>
         <Button>Dodaj zamówienie</Button>
-        <Navbar.Brand>IO IO IO</Navbar.Brand>
+        <Navbar.Brand className="text-white fw-bolder fs-3">IO IO IO</Navbar.Brand>
         <Button>Wyloguj</Button>
       </Container>
     </Navbar>
