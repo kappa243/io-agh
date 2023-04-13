@@ -1,27 +1,31 @@
 import React from "react";
+import { useCallback } from "react";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import addOrder from "./logic/addOrder";
-import { Timestamp } from "firebase/firestore";
+import { addOrder } from "./model/order";
 
 const AddOrder = () => {
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(async () => {
     const order = {
-      carName: "Fiat 126p",
-      year: 1980,
-      clientName: "Jan Kowalski",
+      car: {
+        model: "zupa z pierogami",
+        year: 1980,
+      },
+      client: {
+        firstName: "Ty",
+        lastName: "Carbon",
+      },
       cost: Number(10 + Math.random() * (10000 - 10)).toFixed(2),
       profit: Number(10 + Math.random() * (1000 - 10)).toFixed(2),
       status: "IN_PROGRESS",
-      dueDate: Timestamp.fromDate(new Date("2023-04-24 12:50")),
+      dueDate: new Date("2023-04-24 12:50"),
       description: "Dawno, dawno, dawno temu za siedmiogórozwierzogrodem żył Shrek. k.",
     };
-    addOrder(order);
-    alert("pyk pyk");
-  };
+    await addOrder(order);
+  });
 
   return (
     <Card>
