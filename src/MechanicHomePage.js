@@ -5,11 +5,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
+import { useSignOut } from "react-firebase-hooks/auth";
 import OrderListItem from "./OrderListItem";
 import OrderDetails from "./OrderDetails";
 import AddOrder from "./AddOrder";
-import useOrderList from "./logic/useOrderList";
-import { useSignOut } from "react-firebase-hooks/auth";
+import { useGetOrders } from "./model/order";
 import { auth } from "./logic/fb";
 
 const MechanicHomePage = () => {
@@ -28,8 +28,7 @@ const MechanicHomePage = () => {
 
   const [signOut, ,] = useSignOut(auth);
 
-  const orders = useOrderList();
-  console.log(orders);
+  const orders = useGetOrders();
 
   return (
     <>

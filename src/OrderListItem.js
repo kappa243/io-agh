@@ -19,12 +19,12 @@ const OrderListItem = ({ order, onClick }) => {
       <Card.Body>
         <Row className="align-items-center">
           <Col xs={4}>
-            <Card.Title>{order.carName}</Card.Title>
-            <Card.Subtitle className="text-muted">{order.year}</Card.Subtitle>
+            <Card.Title>{order.car.model}</Card.Title>
+            <Card.Subtitle className="text-muted">{order.car.year}</Card.Subtitle>
           </Col>
 
           <Col xs={2}>
-            <Card.Text>{order.clientName}</Card.Text>
+            <Card.Text>{order.client.firstName} {order.client.lastName}</Card.Text>
           </Col>
 
           <Col xs={2} className="d-flex flex-column align-items-start">
@@ -43,12 +43,12 @@ const OrderListItem = ({ order, onClick }) => {
           </Col>
 
           <Col xs={2}>
-            <Card.Text>{order.dueDate.toDate().toLocaleDateString("pl-PL")}</Card.Text>
+            <Card.Text>{order.dueDate.toLocaleDateString("pl-PL")}</Card.Text>
           </Col>
         </Row>
       </Card.Body>
       <Badge pill className="bg-danger position-absolute top-100 start-100 translate-middle">
-        {daysUntil(order.dueDate.toDate()) + "d"}
+        {daysUntil(order.dueDate) + "d"}
       </Badge>
     </Card>
   );
