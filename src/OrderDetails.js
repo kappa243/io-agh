@@ -40,20 +40,22 @@ const OrderDetails = ({ order }) => {
           </Col>
         </Row>
       </Card.Header>
-      <Card.Body>
-        <Card.Text>
-          <strong>Klient:</strong> {order.client.firstName} {order.client.lastName}
-        </Card.Text>
-        <Card.Text>
-          <strong>Koszt naprawy:</strong> {Number(order.cost).toFixed(2)} zł
-        </Card.Text>
-        <Card.Text>
-          <strong>Zysk:</strong> {Number(order.profit).toFixed(2)} zł
-        </Card.Text>
-        <Card.Text>
-          <strong>Termin realizacji:</strong> {order.dueDate.toLocaleDateString("pl-PL")}
-        </Card.Text>
-        <Card.Text>
+      <Card.Body className="d-flex gap-3">
+        <div className="w-50">
+          <Card.Text>
+            <strong>Klient:</strong> {order.client.firstName} {order.client.lastName}
+          </Card.Text>
+          <Card.Text>
+            <strong>Koszt naprawy:</strong> {Number(order.cost).toFixed(2)} zł
+          </Card.Text>
+          <Card.Text>
+            <strong>Zysk:</strong> {Number(order.profit).toFixed(2)} zł
+          </Card.Text>
+          <Card.Text>
+            <strong>Termin realizacji:</strong> {order.dueDate.toLocaleDateString("pl-PL")}
+          </Card.Text>
+        </div>
+        <Card.Text className="w-50">
           <strong>Opis:</strong> {order.description}
         </Card.Text>
       </Card.Body>
