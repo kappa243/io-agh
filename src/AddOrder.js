@@ -8,6 +8,7 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { addOrder } from "./model/order";
 import { Formik } from "formik";
 import * as yup from "yup";
+import { InputGroup } from "react-bootstrap";
 
 const testCashValue = (value) => {
   const cashRegex = /^\d+(\.\d{1,2})?$/;
@@ -161,12 +162,13 @@ const AddOrder = () => {
               <Form.Label className="mt-3">Dane zlecenia</Form.Label>
               <Row className="g-2">
                 <Col>
-                  <FloatingLabel label="Koszt naprawy [zł]" controlId="formRepairCost">
+                  <InputGroup>
+                    <FloatingLabel label="Koszt naprawy" controlId="formRepairCost">
                     <Form.Control
                       required
                       type="number"
                       name="repairCost"
-                      placeholder="Koszt naprawy [zł]"
+                        placeholder="Koszt naprawy"
                       value={values.repairCost}
                       onChange={handleChange}
                       min="0"
@@ -174,8 +176,11 @@ const AddOrder = () => {
                       isInvalid={touched.repairCost && errors.repairCost}
                     />
                   </FloatingLabel>
+                    <InputGroup.Text>zł</InputGroup.Text>
+                  </InputGroup>
                 </Col>
                 <Col>
+                  <InputGroup>
                   <FloatingLabel label="Zysk [zł]" controlId="formProfit">
                     <Form.Control
                       required
@@ -189,6 +194,8 @@ const AddOrder = () => {
                       isInvalid={touched.profit && errors.profit}
                     />
                   </FloatingLabel>
+                    <InputGroup.Text>zł</InputGroup.Text>
+                  </InputGroup>
                 </Col>
                 <Col>
                   <FloatingLabel label="Termin realizacji" controlId="formDueDate">
