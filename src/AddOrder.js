@@ -11,8 +11,15 @@ import * as yup from "yup";
 import { InputGroup } from "react-bootstrap";
 
 const testCashValue = (value) => {
-  const cashRegex = /^\d+(\.\d{1,2})?$/;
+  const cashRegex = /^\d+(\.\d{1,2})?$/; 
   return cashRegex.test(value);
+};
+
+const testVINNumber = (value) => {
+  console.log(value);
+  if (value == "") return false;
+  const vinRegex = /^[A-HJ-NPR-Z0-9]{8}[0-9X][A-HJ-NPR-Z0-9]{8}$/;
+  return vinRegex.test(value);
 };
 
 const submitOrder = (values) => {
@@ -43,6 +50,14 @@ const AddOrder = () => {
       .number()
       .min(1900)
       .max(new Date().getFullYear())
+      .required("Wymagane"),
+    carVINNumber: yup
+      .string()
+      .required("Wymagane")
+      .test("is-vin", "Niepoprawny numer VIN", testVINNumber),
+    carMileage: yup
+      .number()
+      .min(0)
       .required("Wymagane"),
     firstName: yup
       .string()
@@ -79,6 +94,8 @@ const AddOrder = () => {
       initialValues={{
         carModel: "",
         carProductionYear: "",
+        carVINNumber: "",
+        carMileage: 0,
         firstName: "",
         lastName: "",
         repairCost: 0,
@@ -122,9 +139,40 @@ const AddOrder = () => {
                     placeholder="Rok produkcji"
                     value={values.carProductionYear}
                     onChange={handleChange}
+                    min="1900"
                     isInvalid={touched.carProductionYear && errors.carProductionYear}
                   />
                 </FloatingLabel>
+              </div>
+              <div className="d-flex flex-row mt-2">
+                <FloatingLabel label="Numer VIN" controlId="formVINNumber" className="flex-fill">
+                  <Form.Control
+                    required
+                    type="text"
+                    name="carVINNumber"
+                    placeholder="Numer VIN"
+                    value={values.carVINNumber}
+                    onChange={handleChange}
+                    isInvalid={touched.carVINNumber && errors.carVINNumber}
+                  />
+                </FloatingLabel>
+                <div className="ms-2 w-30">
+                  <InputGroup>
+                    <FloatingLabel label="Przebieg" controlId="formCarMileage">
+                      <Form.Control
+                        required
+                        type="number"
+                        name="carMilage"
+                        placeholder="Przebieg"
+                        value={values.carMileage}
+                        onChange={handleChange}
+                        min="0"
+                        isInvalid={touched.carMileage && errors.carMileage}
+                      />
+                    </FloatingLabel>
+                    <InputGroup.Text>km</InputGroup.Text>
+                  </InputGroup>
+                </div>
               </div>
             </Card.Header>
 
@@ -164,36 +212,36 @@ const AddOrder = () => {
                 <Col>
                   <InputGroup>
                     <FloatingLabel label="Koszt naprawy" controlId="formRepairCost">
-                    <Form.Control
-                      required
-                      type="number"
-                      name="repairCost"
+                      <Form.Control
+                        required
+                        type="number"
+                        name="repairCost"
                         placeholder="Koszt naprawy"
-                      value={values.repairCost}
-                      onChange={handleChange}
-                      min="0"
-                      step="0.01"
-                      isInvalid={touched.repairCost && errors.repairCost}
-                    />
-                  </FloatingLabel>
+                        value={values.repairCost}
+                        onChange={handleChange}
+                        min="0"
+                        step="0.01"
+                        isInvalid={touched.repairCost && errors.repairCost}
+                      />
+                    </FloatingLabel>
                     <InputGroup.Text>zł</InputGroup.Text>
                   </InputGroup>
                 </Col>
                 <Col>
                   <InputGroup>
-                  <FloatingLabel label="Zysk [zł]" controlId="formProfit">
-                    <Form.Control
-                      required
-                      type="number"
-                      name="profit"
-                      placeholder="Zysk [zł]"
-                      value={values.profit}
-                      onChange={handleChange}
-                      min="0"
-                      step="0.01"
-                      isInvalid={touched.profit && errors.profit}
-                    />
-                  </FloatingLabel>
+                    <FloatingLabel label="Zysk [zł]" controlId="formProfit">
+                      <Form.Control
+                        required
+                        type="number"
+                        name="profit"
+                        placeholder="Zysk [zł]"
+                        value={values.profit}
+                        onChange={handleChange}
+                        min="0"
+                        step="0.01"
+                        isInvalid={touched.profit && errors.profit}
+                      />
+                    </FloatingLabel>
                     <InputGroup.Text>zł</InputGroup.Text>
                   </InputGroup>
                 </Col>
