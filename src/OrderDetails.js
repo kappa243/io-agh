@@ -22,6 +22,12 @@ const OrderDetails = ({ order }) => {
       </Card.Header>
       <Card.Body>
         <Card.Text>
+          <strong>VIN:</strong> {order.car.vin}
+        </Card.Text>
+        <Card.Text>
+          <strong>Przebieg:</strong> {order.car.mileage} km
+        </Card.Text>
+        <Card.Text>
           <strong>Klient:</strong> {order.client.firstName} {order.client.lastName}
         </Card.Text>
         <Card.Text>

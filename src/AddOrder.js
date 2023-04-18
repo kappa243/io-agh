@@ -27,6 +27,8 @@ const submitOrder = (values) => {
     car: {
       model: values.carModel,
       year: values.carProductionYear,
+      vin: values.carVINNumber,
+      mileage: values.carMileage,
     },
     client: {
       firstName: values.firstName,
@@ -34,7 +36,7 @@ const submitOrder = (values) => {
     },
     cost: values.repairCost,
     profit: values.profit,
-    status: "AWAITING_PARTS",
+    status: "IN_PROGRESS",
     dueDate: new Date(values.dueDate), // get Date instance instead of formatted string
     description: values.description,
   });
