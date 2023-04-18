@@ -15,7 +15,6 @@ const OrderDetails = ({ order }) => {
             <Card.Subtitle className="text-muted">{order.car.year}</Card.Subtitle>
           </Col>
           <Col className="d-flex flex-row-reverse gap-2">
-            <Button className="btn-danger">Usuń</Button>
             <Button>Edytuj</Button>
           </Col>
         </Row>
