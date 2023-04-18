@@ -16,9 +16,10 @@ const OrderListItem = ({ order, onClick }) => {
 
   return (
     <Card onClick={onClick} className="mb-3" style={{ cursor: "pointer" }} >
-      <Card.Body>
-        <Row className="align-items-center">
-          <Col xs={4}>
+      <Card.Body className="d-flex flex-direction-row">
+        <span className="rounded-pill p-0" style={{ height: "50px", width: "8px", display: "block", backgroundColor: order.car.color }}></span>
+        <Row className="align-items-center flex-fill">
+          <Col xs={4} className="ps-4">
             <Card.Title>{order.car.model}</Card.Title>
             <Card.Subtitle className="text-muted">{order.car.year}</Card.Subtitle>
           </Col>

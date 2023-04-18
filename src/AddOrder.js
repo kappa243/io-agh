@@ -11,7 +11,7 @@ import * as yup from "yup";
 import { InputGroup } from "react-bootstrap";
 
 const testCashValue = (value) => {
-  const cashRegex = /^\d+(\.\d{1,2})?$/; 
+  const cashRegex = /^\d+(\.\d{1,2})?$/;
   return cashRegex.test(value);
 };
 
@@ -22,24 +22,9 @@ const testVINNumber = (value) => {
   return vinRegex.test(value);
 };
 
-const submitOrder = (values) => {
-  addOrder({
-    car: {
-      model: values.carModel,
-      year: values.carProductionYear,
-      vin: values.carVINNumber,
-      mileage: values.carMileage,
-    },
-    client: {
-      firstName: values.firstName,
-      lastName: values.lastName,
-    },
-    cost: values.repairCost,
-    profit: values.profit,
-    status: "IN_PROGRESS",
-    dueDate: new Date(values.dueDate), // get Date instance instead of formatted string
-    description: values.description,
-  });
+const testColorValue = (value) => {
+  const colorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+  return colorRegex.test(value);
 };
 
 
@@ -52,6 +37,10 @@ const AddOrder = () => {
       .number()
       .min(1900)
       .max(new Date().getFullYear())
+      .required("Wymagane"),
+    carColor: yup
+      .string()
+      .test("is-color", "Niepoprawny format koloru", testColorValue)
       .required("Wymagane"),
     carVINNumber: yup
       .string()
@@ -90,12 +79,34 @@ const AddOrder = () => {
       .required("Wymagane"),
   });
 
+  const submitOrder = (values) => {
+    addOrder({
+      car: {
+        model: values.carModel,
+        year: values.carProductionYear,
+        color: values.carColor,
+        vin: values.carVINNumber,
+        mileage: values.carMileage,
+      },
+      client: {
+        firstName: values.firstName,
+        lastName: values.lastName,
+      },
+      cost: values.repairCost,
+      profit: values.profit,
+      status: "IN_PROGRESS",
+      dueDate: new Date(values.dueDate), // get Date instance instead of formatted string
+      description: values.description,
+    });
+  };
+
   return (
     <Formik
       validationSchema={validationSchema}
       initialValues={{
         carModel: "",
         carProductionYear: "",
+        carColor: "#000000",
         carVINNumber: "",
         carMileage: 0,
         firstName: "",
@@ -158,13 +169,24 @@ const AddOrder = () => {
                     isInvalid={touched.carVINNumber && errors.carVINNumber}
                   />
                 </FloatingLabel>
-                <div className="ms-2 w-30">
+                <FloatingLabel label="Kolor" controlId="formCarColor" className="ms-2 w-25">
+                  <Form.Control className="w-100"
+                    required
+                    type="color"
+                    name="carColor"
+                    placeholder="Kolor"
+                    value={values.carColor}
+                    onChange={handleChange}
+                    isInvalid={touched.carColor && errors.carColor}
+                  />
+                </FloatingLabel>
+                <div className="ms-2 w-25">
                   <InputGroup>
                     <FloatingLabel label="Przebieg" controlId="formCarMileage">
                       <Form.Control
                         required
                         type="number"
-                        name="carMilage"
+                        name="carMileage"
                         placeholder="Przebieg"
                         value={values.carMileage}
                         onChange={handleChange}
