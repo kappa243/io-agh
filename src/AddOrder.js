@@ -253,12 +253,12 @@ const AddOrder = () => {
                 </Col>
                 <Col>
                   <InputGroup>
-                    <FloatingLabel label="Zysk [zł]" controlId="formProfit">
+                    <FloatingLabel label="Zysk" controlId="formProfit">
                       <Form.Control
                         required
                         type="number"
                         name="profit"
-                        placeholder="Zysk [zł]"
+                        placeholder="Zysk"
                         value={values.profit}
                         onChange={handleChange}
                         min="0"
