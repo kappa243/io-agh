@@ -15,7 +15,7 @@ const StatusPill = ({ status }) => {
 const OrderListItem = ({ order, onClick }) => {
 
   return (
-    <Card onClick={onClick} className="mb-3" style={{cursor: "pointer"}} >
+    <Card onClick={onClick} className="mb-3" style={{ cursor: "pointer" }} >
       <Card.Body>
         <Row className="align-items-center">
           <Col xs={4}>
@@ -43,7 +43,11 @@ const OrderListItem = ({ order, onClick }) => {
           </Col>
 
           <Col xs={2}>
-            <Card.Text>{order.dueDate.toLocaleDateString("pl-PL")}</Card.Text>
+            <Card.Text>{order.dueDate.toLocaleDateString("pl-PL", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            })}</Card.Text>
           </Col>
         </Row>
       </Card.Body>

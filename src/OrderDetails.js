@@ -34,7 +34,11 @@ const OrderDetails = ({ order }) => {
           <strong>Status:</strong> {orderStatusText[order.status]}
         </Card.Text>
         <Card.Text>
-          <strong>Termin realizacji:</strong> {order.dueDate.toLocaleDateString("pl-PL")}
+          <strong>Termin realizacji:</strong> {order.dueDate.toLocaleDateString("pl-PL", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          })}
         </Card.Text>
         <Card.Text>
           <strong>Opis:</strong> {order.description}
