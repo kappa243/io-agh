@@ -14,7 +14,7 @@ import "./utils/spinner.css";
 
 const AddOrder = () => {
 
-  const { register, handleSubmit, formState: { errors, isSubmitted, isSubmitting } } = useForm({
+  const { register, handleSubmit, reset, formState: { errors, isSubmitted, isSubmitting } } = useForm({
     mode: "onChange"
   });
 
@@ -40,6 +40,7 @@ const AddOrder = () => {
       dueDate: new Date(data.dueDate), // get Date instance instead of formatted string
       description: data.description
     });
+    reset();
   }, [isSubmitting]);
 
   return (
