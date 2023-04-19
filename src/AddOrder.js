@@ -14,6 +14,8 @@ const AddOrder = () => {
   const [carProductionYear, setCarProductionYear] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
   const [repairCost, setRepairCost] = useState("");
   const [profit, setProfit] = useState("");
   const [dueDate, setDueDate] = useState("");
@@ -37,6 +39,8 @@ const AddOrder = () => {
       client: {
         firstName: firstName,
         lastName: lastName,
+        phoneNumber: phoneNumber,
+        email: email,
       },
       cost: Number(repairCost),
       profit: Number(profit),
@@ -49,6 +53,8 @@ const AddOrder = () => {
     setCarProductionYear("");
     setFirstName("");
     setLastName("");
+    setPhoneNumber("");
+    setEmail("");
     setRepairCost("");
     setProfit("");
     setDueDate("");
@@ -106,6 +112,30 @@ const AddOrder = () => {
                   placeholder="Nazwisko"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
+                />
+              </FloatingLabel>
+            </Col>
+          </Row>
+          <Row className="g-2 mt-1">
+            <Col>
+              <FloatingLabel label="Nr telefonu" controlId="formPhoneNumber">
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Nr telefonu"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                />
+              </FloatingLabel>
+            </Col>
+            <Col>
+              <FloatingLabel label="Adres E-mail" controlId="formEmail">
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Adres E-mail"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </FloatingLabel>
             </Col>
