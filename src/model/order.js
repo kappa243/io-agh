@@ -30,14 +30,14 @@ export const orderConverter = {
 };
 
 export const orderStatusText = {
-  AWAITING_PARTS: "Oczekuje na części",
   IN_PROGRESS: "W trakcie naprawy",
+  AWAITING_PARTS: "Oczekuje na części",
   DONE: "Zakończone",
 };
 
 export const orderStatusColor = {
-  AWAITING_PARTS: "warning",
   IN_PROGRESS: "primary",
+  AWAITING_PARTS: "warning",
   DONE: "success",
 };
 

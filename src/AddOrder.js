@@ -31,6 +31,8 @@ const AddOrder = () => {
       client: {
         firstName: data.firstName,
         lastName: data.lastName,
+        phoneNumber: data.phoneNumber,
+        email: data.email,
       },
       cost: data.repairCost,
       profit: data.profit,
@@ -197,10 +199,58 @@ const AddOrder = () => {
                       required: "Wymagane",
                     })}
                   />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.lastName?.message}
+                  </Form.Control.Feedback>
                 </FloatingLabel>
               </Col>
             </Row>
-
+            <Row className="g-2 mt-1">
+              <Col>
+                <FloatingLabel label="Nr. Telefonu" controlId="formPhoneNumber">
+                  <Form.Control
+                    required
+                    type="tel"
+                    name="phoneNumber"
+                    placeholder="Nr. Telefonu"
+                    isInvalid={errors.phoneNumber}
+                    isValid={isSubmitted && !errors.phoneNumber}
+                    {...register("phoneNumber", {
+                      required: "Wymagane",
+                      pattern: {
+                        value: /^[\\+]?[(]?[0-9]{3}[)]?[-\s\\.]?[0-9]{3}[-\s\\.]?[0-9]{4,6}$/,
+                        message: "Niepoprawny numer telefonu",
+                      }
+                    })}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.phoneNumber?.message}
+                  </Form.Control.Feedback>
+                </FloatingLabel>
+              </Col>
+              <Col>
+                <FloatingLabel label="E-mail" controlId="formEmail">
+                  <Form.Control
+                    required
+                    type="email"
+                    name="email"
+                    placeholder="E-mail"
+                    isInvalid={errors.email}
+                    isValid={isSubmitted && !errors.email}
+                    {...register("email", {
+                      required: "Wymagane",
+                      pattern: {
+                        value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                        message: "Niepoprawny adres e-mail",
+                      }
+                    })}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.email?.message}
+                  </Form.Control.Feedback>
+                </FloatingLabel>
+              </Col>
+            </Row>
             <Form.Label className="mt-3">Dane zlecenia</Form.Label>
             <Row className="g-2">
               <Col>
