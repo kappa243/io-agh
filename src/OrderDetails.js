@@ -46,6 +46,12 @@ const OrderDetails = ({ order }) => {
             <strong>Klient:</strong> {order.client.firstName} {order.client.lastName}
           </Card.Text>
           <Card.Text>
+            <strong>Nr tel.:</strong> {order.client.phoneNumber}
+          </Card.Text>
+          <Card.Text>
+            <strong>E-mail:</strong> {order.client.email}
+          </Card.Text>
+          <Card.Text>
             <strong>Koszt naprawy:</strong> {Number(order.cost).toFixed(2)} zł
           </Card.Text>
           <Card.Text>
