@@ -52,7 +52,7 @@ const OrderDetails = ({ order }) => {
             <strong>Zysk:</strong> {Number(order.profit).toFixed(2)} zł
           </Card.Text>
           <Card.Text>
-            <strong>Termin realizacji:</strong> {order.dueDate.toLocaleDateString("pl-PL")}
+            <strong>Termin realizacji:</strong> {order.dueDate.toLocaleString("pl-PL")}
           </Card.Text>
         </div>
         <Card.Text className="w-50">

@@ -43,7 +43,7 @@ const OrderListItem = ({ order, onClick }) => {
           </Col>
 
           <Col xs={2}>
-            <Card.Text>{order.dueDate.toLocaleDateString("pl-PL")}</Card.Text>
+            <Card.Text>{order.dueDate.toLocaleString("pl-PL")}</Card.Text>
           </Col>
         </Row>
       </Card.Body>
