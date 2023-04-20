@@ -21,7 +21,7 @@ const OrderDetails = ({ order }) => {
     <Card>
       <Card.Header>
         <Row className="align-items-center">
-          <span className="rounded-pill p-0 ps ms-1" style={{ height: "50px", width: "8px", backgroundColor: order.car.color }}></span>
+          <span className="rounded-pill p-0 ms-1 align-self-stretch" style={{ width: "0.5rem", backgroundColor: order.car.color }}></span>
           <Col>
             <Card.Title>{order.car.model}</Card.Title>
             <Card.Subtitle className="text-muted">{order.car.year}</Card.Subtitle>
