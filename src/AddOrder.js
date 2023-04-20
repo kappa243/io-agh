@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -14,8 +14,23 @@ import "./utils/spinner.css";
 
 const AddOrder = () => {
 
-  const { register, handleSubmit, reset, formState: { errors, isSubmitted, isSubmitting } } = useForm({
-    mode: "onChange"
+  const { register, handleSubmit, reset, formState: { errors, isSubmitted, isSubmitting, isSubmitSuccessful } } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      carModel: "",
+      carProductionYear: "",
+      carColor: "#000000",
+      carVINNumber: "",
+      carMileage: "0",
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
+      email: "",
+      repairCost: "0",
+      profit: "0",
+      dueDate: new Date().toISOString().split("T")[0],
+      description: "",
+    }
   });
 
   const submitOrder = useCallback(async (data) => {
@@ -40,8 +55,13 @@ const AddOrder = () => {
       dueDate: new Date(data.dueDate), // get Date instance instead of formatted string
       description: data.description
     });
-    reset();
   }, [isSubmitting]);
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+  }, [isSubmitSuccessful, reset]);
 
   return (
     <div className={`form-container ${isSubmitting ? "submitting" : ""}`}>
@@ -81,6 +101,7 @@ const AddOrder = () => {
                   placeholder="Rok produkcji"
                   min="1900"
                   max={new Date().getFullYear()}
+                  step="1"
                   isInvalid={errors.carProductionYear}
                   isValid={isSubmitted && !errors.carProductionYear}
                   {...register("carProductionYear", {
@@ -92,6 +113,10 @@ const AddOrder = () => {
                     max: {
                       value: new Date().getFullYear(),
                       message: `Rok produkcji musi być mniejszy niż ${new Date().getFullYear()}`,
+                    },
+                    pattern: {
+                      value: /^[0-9]{4}$/,
+                      message: "Niepoprawny format roku",
                     },
                   })}
                 />
@@ -146,6 +171,7 @@ const AddOrder = () => {
                       name="carMileage"
                       placeholder="Przebieg"
                       min="0"
+                      step="1"
                       isInvalid={errors.carMileage}
                       isValid={isSubmitted && !errors.carMileage}
                       {...register("carMileage", {
@@ -153,6 +179,10 @@ const AddOrder = () => {
                         min: {
                           value: 0,
                           message: "Przebieg musi być większy niż 0",
+                        },
+                        pattern: {
+                          value: /^[0-9]+$/,
+                          message: "Niepoprawny format przebiegu",
                         },
                       })}
                     />
