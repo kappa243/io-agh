@@ -6,7 +6,7 @@ import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
-import { InputGroup } from "react-bootstrap";
+import InputGroup from "react-bootstrap/InputGroup";
 import { useForm } from "react-hook-form";
 import { addOrder } from "./model/order";
 import "./utils/spinner.css";

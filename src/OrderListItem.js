@@ -14,7 +14,7 @@ const StatusPill = ({ status }) => {
 
 const OrderListItem = ({ order, onClick }) => {
 
-  const [badgeColor, setBadgeColor] = React.useState();
+  const [badgeColor, setBadgeColor] = React.useState("primary");
 
   useEffect(() => {
     if (daysUntil(order.dueDate) < 3) {
