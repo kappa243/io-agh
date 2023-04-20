@@ -45,12 +45,12 @@ const AddOrder = () => {
 
   return (
     <div className={`form-container ${isSubmitting ? "submitting" : ""}`}>
-      <div className="form-overlay">
-        {isSubmitting ? (
+      <div className="form-overlay rounded">
+        {isSubmitting &&
           <>
             <Spinner variant="light" animation="border" size="lg" />
           </>
-        ) : null}
+        }
       </div>
       <Form noValidate onSubmit={handleSubmit(submitOrder)}>
         <Card>

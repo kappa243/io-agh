@@ -16,13 +16,7 @@
   align-items: center;
   transition: 0.3s ease;
   pointer-events: none;
-  border-radius: 5px;
 }
-
-/* .form-container.submitting {
-  opacity: 0.5;
-  pointer-events: none;
-} */
 
 .form-container.submitting .form-overlay {
   background-color: rgba(0, 0, 0, 0.5);
