@@ -10,8 +10,6 @@ import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 
 const OrderDetails = ({ order }) => {
-
-
   const handleStatusChange = (status) => {
     // TODO backend call here
     order.status = status; // to be removed after backend integration
@@ -21,6 +19,7 @@ const OrderDetails = ({ order }) => {
     <Card>
       <Card.Header>
         <Row className="align-items-center">
+          <div className="rounded-pill p-0 ms-1 align-self-stretch" style={{ width: "0.5rem", backgroundColor: order.car.color }}></div>
           <Col>
             <Card.Title>{order.car.model}</Card.Title>
             <Card.Subtitle className="text-muted">{order.car.year}</Card.Subtitle>
@@ -43,6 +42,12 @@ const OrderDetails = ({ order }) => {
       <Card.Body className="d-flex gap-3">
         <div className="w-50">
           <Card.Text>
+            <strong>VIN:</strong> {order.car.vin}
+          </Card.Text>
+          <Card.Text>
+            <strong>Przebieg:</strong> {order.car.mileage} km
+          </Card.Text>
+          <Card.Text>
             <strong>Klient:</strong> {order.client.firstName} {order.client.lastName}
           </Card.Text>
           <Card.Text>
@@ -58,7 +63,14 @@ const OrderDetails = ({ order }) => {
             <strong>Zysk:</strong> {Number(order.profit).toFixed(2)} zł
           </Card.Text>
           <Card.Text>
-            <strong>Termin realizacji:</strong> {order.dueDate.toLocaleDateString("pl-PL")}
+            <strong>Status:</strong> {orderStatusText[order.status]}
+          </Card.Text>
+          <Card.Text>
+            <strong>Termin realizacji:</strong> {order.dueDate.toLocaleDateString("pl-PL", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            })}
           </Card.Text>
         </div>
         <Card.Text className="w-50">
