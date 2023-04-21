@@ -6,12 +6,6 @@ import Badge from "react-bootstrap/Badge";
 import daysUntil from "./utils/dateConverter";
 import { orderStatusColor, orderStatusText } from "./model/order";
 
-const StatusPill = ({ status }) => {
-  return (
-    <span className={`badge bg-${orderStatusColor[status]}`}>{orderStatusText[status]}</span>
-  );
-};
-
 const OrderListItem = ({ order, onClick }) => {
 
   const [badgeColor, setBadgeColor] = React.useState("primary");
@@ -52,7 +46,7 @@ const OrderListItem = ({ order, onClick }) => {
           </Col>
 
           <Col className="text-center" xs={2}>
-            <StatusPill status={order.status} />
+            <Badge className={`bg-${orderStatusColor[order.status]}`}>{orderStatusText[order.status]}</Badge>
           </Col>
 
           <Col xs={2}>
