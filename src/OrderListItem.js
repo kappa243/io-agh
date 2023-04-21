@@ -23,7 +23,7 @@ const OrderListItem = ({ order, onClick }) => {
   return (
     <Card onClick={onClick} className="mb-3" style={{ cursor: "pointer" }} >
       <Card.Body className="d-flex flex-direction-row">
-        <span className="rounded-pill p-0 align-self-stretch" style={{ width: "0.5rem", display: "block", backgroundColor: order.car.color }}></span>
+        <div className="rounded-pill p-0 align-self-stretch" style={{ width: "0.5rem", backgroundColor: order.car.color }}></div>
         <Row className="align-items-center flex-fill">
           <Col xs={4} className="ps-4">
             <Card.Title>{order.car.model}</Card.Title>

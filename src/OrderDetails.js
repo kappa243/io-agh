@@ -10,8 +10,6 @@ import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 
 const OrderDetails = ({ order }) => {
-
-
   const handleStatusChange = (status) => {
     // TODO backend call here
     order.status = status; // to be removed after backend integration
@@ -21,7 +19,7 @@ const OrderDetails = ({ order }) => {
     <Card>
       <Card.Header>
         <Row className="align-items-center">
-          <span className="rounded-pill p-0 ms-1 align-self-stretch" style={{ width: "0.5rem", backgroundColor: order.car.color }}></span>
+          <div className="rounded-pill p-0 ms-1 align-self-stretch" style={{ width: "0.5rem", backgroundColor: order.car.color }}></div>
           <Col>
             <Card.Title>{order.car.model}</Card.Title>
             <Card.Subtitle className="text-muted">{order.car.year}</Card.Subtitle>
