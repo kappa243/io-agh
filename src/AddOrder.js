@@ -17,6 +17,7 @@ const AddOrder = () => {
   const [repairCost, setRepairCost] = useState("");
   const [profit, setProfit] = useState("");
   const [dueDate, setDueDate] = useState("");
+  const [dueTime, setDueTime] = useState("");
   const [description, setDescription] = useState("");
   const [validated, setValidated] = useState(false);
 
@@ -40,7 +41,7 @@ const AddOrder = () => {
       },
       cost: Number(repairCost),
       profit: Number(profit),
-      dueDate: new Date(dueDate),
+      dueDate: new Date(dueDate + "T" + dueTime),
       description: description,
       status: "IN_PROGRESS",
     };
@@ -52,6 +53,7 @@ const AddOrder = () => {
     setRepairCost("");
     setProfit("");
     setDueDate("");
+    setDueTime("");
     setDescription("");
 
     await addOrder(order);
@@ -143,6 +145,17 @@ const AddOrder = () => {
                   required
                   value={dueDate}
                   onChange={(e) => setDueDate(e.target.value)}
+                />
+              </FloatingLabel>
+            </Col>
+            <Col>
+              <FloatingLabel label="Termin realizacji" controlId="formDueDate">
+                <Form.Control
+                  type="time"
+                  placeholder="Termin realizacji"
+                  required
+                  value={dueTime}
+                  onChange={(e) => setDueTime(e.target.value)}
                 />
               </FloatingLabel>
             </Col>
