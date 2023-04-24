@@ -382,11 +382,6 @@ const AddOrder = () => {
                     isValid={isSubmitted && !errors.dueTime}
                     {...register("dueTime", {
                       required: "Wymagane",
-                      /*validate: (value) => {
-                        const today = new Date().setHours(0, 0, 0, 0);
-                        const date = new Date(value);
-                        return date >= today || "Termin nie może poprzedzać dzisiejszej daty";
-                      }*/
                     })}
                   />
                   <Form.Control.Feedback type="invalid">
