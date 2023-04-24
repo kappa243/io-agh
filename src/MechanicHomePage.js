@@ -32,7 +32,7 @@ const MechanicHomePage = () => {
 
   return (
     <>
-      <Navbar bg="primary">
+      <Navbar className="sticky-top" style={{top: "0", height: "6rem"}} bg="primary">
         <Container>
           <Button onClick={handleAddOrder}>Dodaj zamówienie</Button>
           <Navbar.Brand className="text-white fw-bolder fs-3">IO IO IO</Navbar.Brand>
@@ -41,8 +41,8 @@ const MechanicHomePage = () => {
       </Navbar>
       <Container fluid className="mt-3">
         <Row>
-          <Col xs="7">
-            {orders.map((order) => (
+          <Col xs="7" >
+            {orders.sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime()).map((order) => (
               <OrderListItem
                 key={order.id}
                 order={order}
@@ -51,8 +51,10 @@ const MechanicHomePage = () => {
             ))}
           </Col>
           <Col>
-            {selectedOrder && <OrderDetails order={selectedOrder} />}
-            {addOrderVisible && <AddOrder />}
+            <div className="sticky-top" style={{ top: "calc(6rem + 16px)" }}>
+              {selectedOrder && <OrderDetails order={selectedOrder} />}
+              {addOrderVisible && <AddOrder />}
+            </div>
           </Col>
         </Row>
       </Container>
