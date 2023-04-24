@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import { orderStatusColor, orderStatusText } from "./model/order";
+import { orderStatusColor, orderStatusText, updateOrder} from "./model/order";
 import { ButtonGroup, Dropdown } from "react-bootstrap";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
@@ -11,8 +11,8 @@ import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 
 const OrderDetails = ({ order }) => {
   const handleStatusChange = (status) => {
-    // TODO backend call here
-    order.status = status; // to be removed after backend integration
+    order.status = status;
+    updateOrder(order);
   };
 
   return (
