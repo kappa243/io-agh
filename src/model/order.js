@@ -1,4 +1,4 @@
-import { Timestamp, collection, addDoc } from "firebase/firestore";
+import { Timestamp, collection, addDoc, getDoc, doc } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { db } from "../logic/fb";
 
@@ -53,4 +53,8 @@ export const useGetOrders = () => {
 
 export const addOrder = async order => {
   await addDoc(collection(db, "orders").withConverter(orderConverter), order);
+};
+
+export const getOrder = async id => {
+  return (await getDoc(doc(db, "orders", id).withConverter(orderConverter))).data();
 };
