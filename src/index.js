@@ -1,13 +1,52 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import "bootstrap/dist/css/bootstrap.min.css";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
+
+import App from "./App";
+import ProtectedRoute from "./ProtectedRoute";
+import LoginPage from "./LoginPage";
+import MechanicHomePage from "./MechanicHomePage";
+import ClientOrderPage from "./ClientOrderPage";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        index: true,
+        element: <Navigate to="login" replace />,
+      },
+      {
+        path: "login",
+        element: <LoginPage />,
+      },
+      {
+        path: "mechanic/home",
+        element: (
+          <ProtectedRoute permissionLevel="MECHANIC">
+            <MechanicHomePage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "client/order",
+        element: <ClientOrderPage />,
+      },
+    ],
+  },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
