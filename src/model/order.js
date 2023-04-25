@@ -1,4 +1,4 @@
-import { Timestamp, collection, addDoc } from "firebase/firestore";
+import { Timestamp, collection, doc, addDoc, updateDoc } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { db } from "../logic/fb";
 
@@ -53,4 +53,9 @@ export const useGetOrders = () => {
 
 export const addOrder = async order => {
   await addDoc(collection(db, "orders").withConverter(orderConverter), order);
+};
+
+// To update modify order fields in React app and pass order here
+export const updateOrder = async order => {
+  await updateDoc(doc(collection(db, "orders").withConverter(orderConverter), order.id), order);
 };
