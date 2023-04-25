@@ -13,7 +13,6 @@ import "./utils/spinner.css";
 
 
 const AddOrder = () => {
-
   const { register, handleSubmit, reset, formState: { errors, isSubmitted, isSubmitting, isSubmitSuccessful } } = useForm({
     mode: "onChange",
     defaultValues: {
@@ -52,7 +51,7 @@ const AddOrder = () => {
       cost: data.repairCost,
       profit: data.profit,
       status: "IN_PROGRESS",
-      dueDate: new Date(data.dueDate), // get Date instance instead of formatted string
+      dueDate: new Date(data.dueDate + "T" + data.dueTime), // get Date instance instead of formatted string
       description: data.description
     });
   }, [isSubmitting]);
@@ -195,7 +194,6 @@ const AddOrder = () => {
               </Form.Group>
             </div>
           </Card.Header>
-
           <Card.Body>
             <Form.Label>Dane klienta</Form.Label>
             <Row className="g-2">
@@ -370,6 +368,24 @@ const AddOrder = () => {
                   />
                   <Form.Control.Feedback type="invalid">
                     {errors.dueDate?.message}
+                  </Form.Control.Feedback>
+                </FloatingLabel>
+              </Col>
+              <Col>
+                <FloatingLabel label="Termin realizacji" controlId="formDueTime">
+                  <Form.Control
+                    required
+                    type="time"
+                    name="dueTime"
+                    placeholder="Termin realizacji"
+                    isInvalid={errors.dueTime}
+                    isValid={isSubmitted && !errors.dueTime}
+                    {...register("dueTime", {
+                      required: "Wymagane",
+                    })}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.dueTime?.message}
                   </Form.Control.Feedback>
                 </FloatingLabel>
               </Col>
