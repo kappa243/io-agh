@@ -1,5 +1,6 @@
 import React from "react";
 import { useCallback } from "react";
+import { Navigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -53,7 +54,7 @@ const LoginPage = () => {
             ) : error ? (
               <p className="mt-3 text-danger">{error.message}</p>
             ) : user ? (
-              <p className="mt-3">Zalogowano</p>
+              <Navigate to="/mechanic/home" />
             ) : null}
           </Form>
         </Col>
