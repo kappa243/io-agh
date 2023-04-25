@@ -57,5 +57,5 @@ export const addOrder = async order => {
 
 // To update modify order fields in React app and pass order here
 export const updateOrder = async order => {
-  await updateDoc(doc(db, "orders", order.id), order);
+  await updateDoc(doc(collection(db, "orders").withConverter(orderConverter), order.id), order);
 };
