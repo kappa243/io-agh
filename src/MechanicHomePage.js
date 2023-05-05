@@ -11,6 +11,8 @@ import OrderDetails from "./OrderDetails";
 import AddOrder from "./AddOrder";
 import { useGetOrders } from "./model/order";
 import { auth } from "./logic/fb";
+import { motion } from "framer-motion";
+
 
 const MechanicHomePage = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -28,11 +30,12 @@ const MechanicHomePage = () => {
 
   const [signOut, ,] = useSignOut(auth);
 
-  const orders = useGetOrders();
+  const orders = useGetOrders()
+    .sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime());
 
   return (
     <>
-      <Navbar className="sticky-top" style={{top: "0", height: "6rem"}} bg="primary">
+      <Navbar className="sticky-top" style={{ top: "0", height: "6rem" }} bg="primary">
         <Container>
           <Button onClick={handleAddOrder}>Dodaj zamówienie</Button>
           <Navbar.Brand className="text-white fw-bolder fs-3">IO IO IO</Navbar.Brand>
@@ -42,12 +45,18 @@ const MechanicHomePage = () => {
       <Container fluid className="mt-3">
         <Row>
           <Col xs="7" >
-            {orders.sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime()).map((order) => (
-              <OrderListItem
+            {orders.map((order, index) => (
+              <motion.div
                 key={order.id}
-                order={order}
-                onClick={() => handleSelectOrder(order)}
-              />
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0, transition: { delay: index * 0.05 } }}
+                transition={{ duration: 0.2 }}
+              >
+                <OrderListItem
+                  order={order}
+                  onClick={() => handleSelectOrder(order)}
+                />
+              </motion.div>
             ))}
           </Col>
           <Col>
