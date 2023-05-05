@@ -1,6 +1,5 @@
 import React from "react";
 import { useCallback } from "react";
-import { Navigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -8,24 +7,28 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "./logic/fb";
+import { FloatingLabel } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import { Navigate } from "react-router-dom";
 
 function formatErrorMessage(error) {
-
   switch (error.code) {
-  case "auth/user-not-found":
-    return "Nie znaleziono użytkownika";
+    case "auth/user-not-found":
+      return "Nie znaleziono użytkownika";
 
-  case "auth/wrong-password":
-    return "Błędne hasło";
+    case "auth/wrong-password":
+      return "Błędne hasło";
 
-  case "auth/network-request-failed":
-    return "Błąd sieci. Napraw problemy z internetem";
+    case "auth/network-request-failed":
+      return "Błąd sieci. Napraw problemy z internetem";
   }
 
   return "Błąd wewnętrzny. Skontaktuj się z administratorem i podaj mu kod błędu: " + error.message;
 }
 
 const LoginPage = () => {
+  const { register, handleSubmit, formState: { errors, isSubmitted } } = useForm();
+
   const [
     signInWithEmailAndPassword,
     user,
@@ -33,45 +36,68 @@ const LoginPage = () => {
     error,
   ] = useSignInWithEmailAndPassword(auth);
 
-  const onSubmit = useCallback(e => {
-    e.preventDefault();
-    const email = e.target.elements[0].value;
-    const password = e.target.elements[1].value;
+  const onSubmit = useCallback(data => {
+    const email = data.email;
+    const password = data.password;
     signInWithEmailAndPassword(email, password);
+
   }, []);
 
   return (
-    <Container fluid style={{
-      backgroundImage: "url(/bg.jpg)",
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "center",
-      backgroundSize: "cover" }}>
-      <Row className="vh-100 justify-content-center align-items-center">
+    <Container fluid>
+      <Row className="justify-content-center align-items-top">
+        <h1 className="mt-5 text-center mb-5 fs-1">IO IO IO</h1>
         <Col md="8" lg="6" xl="5" xxl="4">
-          <Form className="text-light bg-dark border p-4 rounded-4 bg-opacity-75" onSubmit={onSubmit}>
-            <h1 className="mb-3 text-center">IO IO IO</h1>
+          <Form noValidate className="bg-light border p-4 rounded-4" onSubmit={handleSubmit(onSubmit)}>
+            <h2 className="mb-3 text-center fs-3">Zaloguj się</h2>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" placeholder="ten ze studentem" required />
-            </Form.Group>
+            <FloatingLabel label="Email" controlId="email" className="mb-3">
+              <Form.Control
+                required
+                type="email"
+                name="email"
+                placeholder="Email"
+                isInvalid={isSubmitted && errors.email}
+                {...register("email", {
+                  required: "Email jest wymagany",
+                  pattern: {
+                    value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                    message: "Niepoprawny adres e-mail",
+                  }
+                })}
+              />
+            </FloatingLabel>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Hasło</Form.Label>
-              <Form.Control type="password" placeholder="mail przed @" required />
-            </Form.Group>
- 
-            <Button variant="primary" type="submit">
-              Zaloguj
-            </Button>
- 
-            {loading ? (
-              <p className="mt-3">Ładowanie...</p>
-            ) : error ? (
-              <p className="mt-3 text-danger">{formatErrorMessage(error)}</p>
-            ) : user ? (
-              <Navigate to="/mechanic/home" />
-            ) : null}
+            <FloatingLabel label="Hasło" controlId="password" className="mb-3">
+              <Form.Control
+                required
+                type="password"
+                name="password"
+                placeholder="Hasło"
+                isInvalid={isSubmitted && errors.password}
+                {...register("password", {
+                  required: "Hasło jest wymagane"
+                })}
+              />
+            </FloatingLabel>
+
+            <div className="text-center mb-3">
+              <Button variant="primary" type="submit">
+                {
+                  loading ? "Logowanie..." : "Zaloguj"
+                }
+              </Button>
+            </div>
+
+            <p className="text-danger align-self-center m-0">
+              {
+                errors.email && errors.email?.message ||
+                errors.password && errors.password?.message ||
+                error && formatErrorMessage(error)
+              }
+            </p>
+
+            {user ? <Navigate to="/mechanic/home" /> : null}
           </Form>
         </Col>
       </Row>
