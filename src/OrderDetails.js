@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -8,14 +8,25 @@ import { ButtonGroup, Dropdown } from "react-bootstrap";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
+import { BiCopy } from "react-icons/bi";
+import { FaCheck } from "react-icons/fa";
 
 const OrderDetails = ({ order }) => {
+  const [isCopied, setIsCopied] = useState(false);
+
   const handleStatusChange = (status) => {
     order.status = status;
     updateOrder(order);
   };
 
-  return (
+  const handleCopyClick = () => {
+    const orderLink = `${window.location.origin}/client/order?orderId=${order.id}`;
+    navigator.clipboard.writeText(orderLink);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 5000);
+  };
+
+  return ( 
     <Card>
       <Card.Header>
         <Row className="align-items-center">
@@ -36,6 +47,9 @@ const OrderDetails = ({ order }) => {
                 ))}
               </DropdownMenu>
             </Dropdown>
+            <Button variant="light" onClick={handleCopyClick} disabled={isCopied}>
+              {isCopied ? <FaCheck /> : <BiCopy />}
+            </Button>
           </Col>
         </Row>
       </Card.Header>
