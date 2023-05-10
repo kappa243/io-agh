@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { getOrder, orderStatusText, orderStatusColor } from "./model/order";
+'use client';
+
+import { useSearchParams } from "next/navigation";
+import { useState, useEffect, useCallback } from "react";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import { Badge } from "react-bootstrap";
+import { getOrder, orderStatusText, orderStatusColor } from "@/model/order";
+
 
 /*
   Simple page that displays order details.
@@ -12,30 +15,33 @@ import { Badge } from "react-bootstrap";
   In future it should also allow to select car parts.
 */
 
-const ClientOrderPage = () => {
+function useFetchOrder() {
+  const searchParams = useSearchParams();
   const [order, setOrder] = useState(null);
-  const location = useLocation();
-
+  // TODO: use firebase hooks
+  const fetchOrder = useCallback(async orderId => {
+    try {
+      const result = await getOrder(orderId);
+      setOrder(result);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+  const orderId = searchParams.get("orderId");
   useEffect(() => {
-    const fetchOrder = async(orderId) => {
-      try {
-        const result = await getOrder(orderId);
-        setOrder(result);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    const searchParams = new URLSearchParams(location.search);
-    const orderId = searchParams.get("orderId");
     if (orderId) {
       fetchOrder(orderId);
     }
-  }, [location]);
+  }, [fetchOrder, orderId]);
+  return order
+}
+
+const ClientOrderPage = () => {
+  const order = useFetchOrder();
 
   return (
     <>
-      {order && (
+      {order ? (
         <Container className="mt-3">
           <Card>
             <Card.Header>
@@ -63,6 +69,10 @@ const ClientOrderPage = () => {
               </Card.Text>
             </Card.Body>
           </Card>
+        </Container>
+      ) : (
+        <Container className="mt-3">
+          <h2>Ładowanie...</h2>
         </Container>
       )}
     </>

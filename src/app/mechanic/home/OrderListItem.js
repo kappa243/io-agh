@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+'use client';
+
+import { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Badge from "react-bootstrap/Badge";
-import daysUntil from "./utils/dateConverter";
-import { orderStatusColor, orderStatusText } from "./model/order";
+import daysUntil from "@/utils/dateConverter";
+import { orderStatusColor, orderStatusText } from "@/model/order";
 
 const OrderListItem = ({ order, onClick }) => {
 
-  const [badgeColor, setBadgeColor] = React.useState("primary");
+  const [badgeColor, setBadgeColor] = useState("primary");
 
   useEffect(() => {
     if (daysUntil(order.dueDate) < 3) {
