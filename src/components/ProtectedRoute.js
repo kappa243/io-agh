@@ -1,11 +1,16 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
-import { useUserPermissionLevel } from "./logic/auth";
+'use client';
+
+import { useRouter } from "next/navigation";
+import { useUserPermissionLevel } from "@/logic/auth";
 
 const ProtectedRoute = ({ permissionLevel, children }) => {
+  const router = useRouter();
   const [userPermissionLevel, loading] = useUserPermissionLevel();
   if (loading) return null;
-  if (!userPermissionLevel) return <Navigate to="/login" />;
+  if (!userPermissionLevel) {
+    router.replace("/login");
+    return null;
+  }
   if (userPermissionLevel !== permissionLevel) return <h1>Forbidden</h1>;
   return children;
 };

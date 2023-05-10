@@ -1,4 +1,5 @@
-import React from "react";
+'use client';
+
 import { useState, useCallback } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -6,11 +7,13 @@ import Col from "react-bootstrap/Col";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import { useSignOut } from "react-firebase-hooks/auth";
+import { useGetOrders } from "@/model/order";
+import { auth } from "@/logic/fb";
+import ProtectedRoute from "@/components/ProtectedRoute";
 import OrderListItem from "./OrderListItem";
 import OrderDetails from "./OrderDetails";
 import AddOrder from "./AddOrder";
-import { useGetOrders } from "./model/order";
-import { auth } from "./logic/fb";
+
 
 const MechanicHomePage = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -62,4 +65,12 @@ const MechanicHomePage = () => {
   );
 };
 
-export default MechanicHomePage;
+const MechanicHomePageProtected = () => {
+  return (
+    <ProtectedRoute permissionLevel="MECHANIC">
+      <MechanicHomePage />
+    </ProtectedRoute>
+  );
+};
+
+export default MechanicHomePageProtected;

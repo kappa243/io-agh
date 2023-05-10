@@ -1,9 +1,9 @@
-import React from "react";
+'use client';
+
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import { LinkContainer } from "react-router-bootstrap";
-import { useUserEmail } from "./logic/auth";
+import { useUserEmail } from "@/logic/auth";
 
 const DebugNavbar = () => {
   const email = useUserEmail();
@@ -15,15 +15,9 @@ const DebugNavbar = () => {
         <Navbar.Text>Debug only navbar</Navbar.Text>
         <Navbar.Collapse>
           <Nav className="me-auto">
-            <LinkContainer to="/login">
-              <Nav.Link>Login</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/mechanic/home">
-              <Nav.Link>Mechanic Home</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/client/order">
-              <Nav.Link>Client Order</Nav.Link>
-            </LinkContainer>
+            <Nav.Link href="/login">Login</Nav.Link>
+            <Nav.Link href="/mechanic/home">Mechanic Home</Nav.Link>
+            <Nav.Link href="/client/order">Client Order</Nav.Link>
           </Nav>
         </Navbar.Collapse>
         <Navbar.Text>{email}</Navbar.Text>

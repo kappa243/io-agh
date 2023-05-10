@@ -1,4 +1,6 @@
-import React, { useCallback, useEffect } from "react";
+'use client';
+
+import { useCallback, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -8,8 +10,8 @@ import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import InputGroup from "react-bootstrap/InputGroup";
 import { useForm } from "react-hook-form";
-import { addOrder } from "./model/order";
-import "./utils/spinner.css";
+import { addOrder } from "@/model/order";
+import "@/styles/spinner.css";
 
 
 const AddOrder = () => {
