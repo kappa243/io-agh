@@ -1,13 +1,14 @@
-import React from "react";
+'use client';
+
+import { useRouter } from "next/navigation";
 import { useCallback } from "react";
-import { Navigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "./logic/fb";
+import { auth } from "@/logic/fb";
 
 function formatErrorMessage(error) {
 
@@ -26,6 +27,8 @@ function formatErrorMessage(error) {
 }
 
 const LoginPage = () => {
+  const router = useRouter();
+
   const [
     signInWithEmailAndPassword,
     user,
@@ -38,7 +41,11 @@ const LoginPage = () => {
     const email = e.target.elements[0].value;
     const password = e.target.elements[1].value;
     signInWithEmailAndPassword(email, password);
-  }, []);
+  }, [signInWithEmailAndPassword]);
+
+  if (!loading && !error && user) {
+    router.replace("/mechanic/home");
+  }
 
   return (
     <Container fluid style={{
@@ -70,7 +77,7 @@ const LoginPage = () => {
             ) : error ? (
               <p className="mt-3 text-danger">{formatErrorMessage(error)}</p>
             ) : user ? (
-              <Navigate to="/mechanic/home" />
+              <p className="mt-3 text-success">Zalogowano</p>
             ) : null}
           </Form>
         </Col>

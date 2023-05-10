@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+'use client';
+
+import { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import { orderStatusColor, orderStatusText, updateOrder} from "./model/order";
 import { ButtonGroup, Dropdown } from "react-bootstrap";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import { BiCopy } from "react-icons/bi";
 import { FaCheck } from "react-icons/fa";
+import { orderStatusColor, orderStatusText, updateOrder} from "@/model/order";
 
 const OrderDetails = ({ order }) => {
   const [isCopied, setIsCopied] = useState(false);
