@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import {useCallback, useState} from "react";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -10,8 +10,13 @@ import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import { BiCopy } from "react-icons/bi";
-import { FaCheck } from "react-icons/fa";
-import { orderStatusColor, orderStatusText, updateOrder} from "@/model/order";
+import {FaCheck, FaPlus} from "react-icons/fa";
+import {addOrder, orderStatusColor, orderStatusText, updateOrder} from "@/model/order";
+import Form from "react-bootstrap/Form";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import OrderListItem from "@/app/mechanic/home/OrderListItem";
+import PartListItem from "@/app/mechanic/home/PartListItem";
+import {Timestamp} from "firebase/firestore";
 
 const OrderDetails = ({ order }) => {
   const [isCopied, setIsCopied] = useState(false);
@@ -27,6 +32,18 @@ const OrderDetails = ({ order }) => {
     setIsCopied(true);
     setTimeout(() => setIsCopied(false), 5000);
   };
+
+  const submitPart = useCallback((event) => {
+    event.preventDefault()
+    let data = event.target.elements
+    order.parts.push({
+      name: data.formPartName.value,
+      price: data.formPartPrice.value,
+      deliveryDate: Timestamp.fromDate(new Date(data.formPartDeliveryDate.value))
+    })
+
+    updateOrder(order);
+  });
 
   return ( 
     <Card>
@@ -95,6 +112,55 @@ const OrderDetails = ({ order }) => {
           <strong>Opis:</strong> {order.description}
         </Card.Text>
       </Card.Body>
+      <Col>
+        <Card.Text><strong className="text-xl">Lista części</strong></Card.Text>
+        {order.parts.map((part) => (
+            <PartListItem
+                key={part.id}
+                part={part}
+                // onClick={() => handleSelectOrder(order)}
+            />
+        ))}
+      </Col>
+      <Form noValidate onSubmit={submitPart}>
+        <Row className="g-2">
+          <Col>
+            <FloatingLabel label="Nazwa" controlId="formPartName">
+              <Form.Control
+                  required
+                  type="text"
+                  name="formPartName"
+                  placeholder="Nazwa"
+              />
+            </FloatingLabel>
+          </Col>
+          <Col>
+            <FloatingLabel label="Cena" controlId="formPartPrice">
+              <Form.Control
+                  required
+                  type="number"
+                  name="formPartPrice"
+                  placeholder="Cena"
+              />
+            </FloatingLabel>
+          </Col>
+          <Col>
+            <FloatingLabel label="Termin dostawy" controlId="formPartDeliveryDate">
+              <Form.Control
+                  required
+                  type="date"
+                  name="formPartDeliveryDate"
+                  placeholder="Termin dostawy"
+              />
+            </FloatingLabel>
+          </Col>
+          <Col>
+            <Button type="submit">
+              <FaPlus/>
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     </Card>
   );
 };

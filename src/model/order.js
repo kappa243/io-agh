@@ -12,6 +12,7 @@ export const orderConverter = {
       status: order.status,
       dueDate: Timestamp.fromDate(order.dueDate),
       description: order.description,
+      parts: order.parts,
     };
   },
   fromFirestore: (snapshot, options) => {
@@ -25,6 +26,7 @@ export const orderConverter = {
       status: data.status,
       dueDate: data.dueDate.toDate(),
       description: data.description,
+      parts: data.parts
     };
   },
 };

@@ -31,6 +31,7 @@ const AddOrder = () => {
       profit: "0",
       dueDate: new Date().toISOString().split("T")[0],
       description: "",
+      parts: []
     }
   });
 
@@ -54,7 +55,8 @@ const AddOrder = () => {
       profit: data.profit,
       status: "IN_PROGRESS",
       dueDate: new Date(data.dueDate + "T" + data.dueTime), // get Date instance instead of formatted string
-      description: data.description
+      description: data.description,
+      parts: []
     });
   }, [isSubmitting]);
 
