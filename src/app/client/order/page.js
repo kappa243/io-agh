@@ -6,6 +6,8 @@ import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import { Badge } from "react-bootstrap";
 import { getOrder, orderStatusText, orderStatusColor } from "@/model/order";
+import PartListItem from "@/app/mechanic/home/PartListItem";
+import Col from "react-bootstrap/Col";
 
 
 /*
@@ -67,6 +69,13 @@ const ClientOrderPage = () => {
                   {orderStatusText[order.status]}
                 </Badge>
               </Card.Text>
+              <Card.Text><strong className="text-xl">Lista części</strong></Card.Text>
+              {order.parts.map((part) => (
+                  <PartListItem
+                      key={part.id}
+                      part={part}
+                  />
+              ))}
             </Card.Body>
           </Card>
         </Container>
