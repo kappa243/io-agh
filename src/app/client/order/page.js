@@ -76,6 +76,21 @@ const ClientOrderPage = () => {
                       part={part}
                   />
               ))}
+              <Card.Text>
+                <strong>Całkowity koszt naprawy: </strong>
+                {Number(order.partsCost + parseFloat(order.profit)).toFixed(2)} zł
+              </Card.Text>
+              {/*<Card.Text>*/}
+              {/*  <strong>Dostawa ostatniej części: </strong>*/}
+              {/*  /!*{order.partsLastDate.toLocaleString("pl-PL", {*!/*/}
+              {/*  /!*  year: "numeric",*!/*/}
+              {/*  /!*  month: "2-digit",*!/*/}
+              {/*  /!*  day: "2-digit",*!/*/}
+              {/*  /!*  hour: "2-digit",*!/*/}
+              {/*  /!*  minute: "2-digit"*!/*/}
+              {/*  /!*})}*!/*/}
+              {/*  /!*{order.partsLastDate}*!/*/}
+              {/*</Card.Text>*/}
             </Card.Body>
           </Card>
         </Container>

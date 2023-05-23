@@ -26,7 +26,11 @@ export const orderConverter = {
       status: data.status,
       dueDate: data.dueDate.toDate(),
       description: data.description,
-      parts: data.parts
+      parts: data.parts,
+      partsCost: data.parts ? data.parts.reduce((acc, part) => acc + parseFloat(part.price), 0) : 0,
+
+      // this doesnt work (returns 1972 date)
+      // partsLastDate: data.parts ? data.parts.reduce((acc, part) => new Date(Math.max(acc, part.deliveryDate)), 0) : 0, // TODO remove after db reset (the ternaries)
     };
   },
 };

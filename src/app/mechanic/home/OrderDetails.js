@@ -90,10 +90,13 @@ const OrderDetails = ({ order }) => {
             <strong>E-mail:</strong> {order.client.email}
           </Card.Text>
           <Card.Text>
-            <strong>Koszt naprawy:</strong> {Number(order.cost).toFixed(2)} zł
+            <strong>Koszt naprawy:</strong> {Number(order.partsCost).toFixed(2)} zł
           </Card.Text>
           <Card.Text>
             <strong>Zysk:</strong> {Number(order.profit).toFixed(2)} zł
+          </Card.Text>
+          <Card.Text>
+            <strong>Całkowity koszt zamówienia:</strong> {Number(order.partsCost + parseFloat(order.profit)).toFixed(2)} zł
           </Card.Text>
           <Card.Text>
             <strong>Status:</strong> {orderStatusText[order.status]}
