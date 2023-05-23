@@ -45,7 +45,7 @@ const ClientOrderPage = () => {
         <Container className="mt-3">
           <Card>
             <Card.Header>
-              <h2>Zlecenie {order.id}</h2>
+              <h2>Zlecenie {order.car.model} {order.car.year}</h2>
             </Card.Header>
             <Card.Body>
               <Card.Text>
