@@ -58,14 +58,7 @@ const OrderDetails = ({ order }) => {
             <Card.Subtitle className="text-muted">{order.car.year}</Card.Subtitle>
           </Col>
           <Col className="d-flex flex-row-reverse gap-2">
-            {isEditing ? (
-                <>
-                  <Button variant="danger" onClick={handleCancelEdit}>Anuluj</Button>
-                  <Button variant="success" onClick={() => handleSaveEdit(order)}>Zapisz</Button>
-                </>
-              ) : (
-                <Button onClick={handleEditClick}>Edytuj</Button>
-            )}
+            <Button onClick={handleEditClick}>Edytuj</Button>
             <Dropdown as={ButtonGroup} style={{ width: "180px" }}>
               <DropdownToggle variant={orderStatusColor[order.status]} className="w-100">
                 {orderStatusText[order.status]}
