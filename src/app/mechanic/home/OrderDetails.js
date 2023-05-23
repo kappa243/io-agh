@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -12,9 +12,15 @@ import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import { BiCopy } from "react-icons/bi";
 import { FaCheck } from "react-icons/fa";
 import { orderStatusColor, orderStatusText, updateOrder} from "@/model/order";
+import EditOrder from "./EditOrder";
 
 const OrderDetails = ({ order }) => {
   const [isCopied, setIsCopied] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    setIsEditing(false);
+  }, [order]);
 
   const handleStatusChange = (status) => {
     order.status = status;
@@ -28,7 +34,21 @@ const OrderDetails = ({ order }) => {
     setTimeout(() => setIsCopied(false), 5000);
   };
 
-  return ( 
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveEdit = () => {
+    setIsEditing(false);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+  };
+
+  return (
+    <>
+      {isEditing ? (<EditOrder order={order} onSave={handleSaveEdit} onCancel={handleCancelEdit}/>) : (
     <Card>
       <Card.Header>
         <Row className="align-items-center">
@@ -38,7 +58,14 @@ const OrderDetails = ({ order }) => {
             <Card.Subtitle className="text-muted">{order.car.year}</Card.Subtitle>
           </Col>
           <Col className="d-flex flex-row-reverse gap-2">
-            <Button>Edytuj</Button>
+            {isEditing ? (
+                <>
+                  <Button variant="danger" onClick={handleCancelEdit}>Anuluj</Button>
+                  <Button variant="success" onClick={() => handleSaveEdit(order)}>Zapisz</Button>
+                </>
+              ) : (
+                <Button onClick={handleEditClick}>Edytuj</Button>
+            )}
             <Dropdown as={ButtonGroup} style={{ width: "180px" }}>
               <DropdownToggle variant={orderStatusColor[order.status]} className="w-100">
                 {orderStatusText[order.status]}
@@ -95,7 +122,8 @@ const OrderDetails = ({ order }) => {
           <strong>Opis:</strong> {order.description}
         </Card.Text>
       </Card.Body>
-    </Card>
+    </Card>)}
+    </>
   );
 };
 
