@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import {useCallback, useState, useEffect} from "react";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -10,9 +10,14 @@ import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import { BiCopy } from "react-icons/bi";
-import { FaCheck } from "react-icons/fa";
-import { orderStatusColor, orderStatusText, updateOrder} from "@/model/order";
+import {FaCheck, FaPlus} from "react-icons/fa";
+import {addOrder, orderStatusColor, orderStatusText, updateOrder, partsCost, partsMaxDate} from "@/model/order";
 import EditOrder from "./EditOrder";
+import Form from "react-bootstrap/Form";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import OrderListItem from "@/app/mechanic/home/OrderListItem";
+import PartListItem from "@/app/mechanic/home/PartListItem";
+import {Timestamp} from "firebase/firestore";
 
 const OrderDetails = ({ order }) => {
   const [isCopied, setIsCopied] = useState(false);
@@ -34,6 +39,18 @@ const OrderDetails = ({ order }) => {
     setTimeout(() => setIsCopied(false), 5000);
   };
 
+  const submitPart = useCallback((event) => {
+    event.preventDefault()
+    let data = event.target.elements
+    order.parts.push({
+      name: data.formPartName.value,
+      price: data.formPartPrice.value,
+      deliveryDate: new Date(data.formPartDeliveryDate.value)
+    })
+
+    updateOrder(order);
+  });
+  
   const handleEditClick = () => {
     setIsEditing(true);
   };
@@ -93,16 +110,19 @@ const OrderDetails = ({ order }) => {
             <strong>E-mail:</strong> {order.client.email}
           </Card.Text>
           <Card.Text>
-            <strong>Koszt naprawy:</strong> {Number(order.cost).toFixed(2)} zł
+            <strong>Koszt naprawy:</strong> {Number(order.partsCost).toFixed(2)} zł
           </Card.Text>
           <Card.Text>
             <strong>Zysk:</strong> {Number(order.profit).toFixed(2)} zł
           </Card.Text>
           <Card.Text>
+            <strong>Całkowity koszt zamówienia:</strong> {Number(partsCost(order.parts) + parseFloat(order.profit)).toFixed(2)} zł
+          </Card.Text>
+          <Card.Text>
             <strong>Status:</strong> {orderStatusText[order.status]}
           </Card.Text>
           <Card.Text>
-            <strong>Termin realizacji:</strong> {order.dueDate.toLocaleString("pl-PL", {
+            <strong>Termin dostawy ostatniej części:</strong> {partsMaxDate(order.parts).toLocaleString("pl-PL", {
               year: "numeric",
               month: "2-digit",
               day: "2-digit",
@@ -115,6 +135,57 @@ const OrderDetails = ({ order }) => {
           <strong>Opis:</strong> {order.description}
         </Card.Text>
       </Card.Body>
+      <Col>
+        <Card.Text><strong className="text-xl">Lista części</strong></Card.Text>
+        {order.parts.map((part) => (
+            <PartListItem
+                key={part.id}
+                part={part}
+                // onClick={() => handleSelectOrder(order)}
+            />
+        ))}
+      </Col>
+      <Form noValidate onSubmit={submitPart}>
+        <Row className="g-2">
+          <Col>
+            <FloatingLabel label="Nazwa" controlId="formPartName">
+              <Form.Control
+                  required
+                  type="text"
+                  name="formPartName"
+                  placeholder="Nazwa"
+              />
+            </FloatingLabel>
+          </Col>
+          <Col>
+            <FloatingLabel label="Cena" controlId="formPartPrice">
+              <Form.Control
+                  required
+                  type="number"
+                  name="formPartPrice"
+                  placeholder="Cena"
+                  min="0"
+                  step="0.01"
+              />
+            </FloatingLabel>
+          </Col>
+          <Col>
+            <FloatingLabel label="Termin dostawy" controlId="formPartDeliveryDate">
+              <Form.Control
+                  required
+                  type="date"
+                  name="formPartDeliveryDate"
+                  placeholder="Termin dostawy"
+              />
+            </FloatingLabel>
+          </Col>
+          <Col>
+            <Button type="submit">
+              <FaPlus/>
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     </Card>)}
     </>
   );

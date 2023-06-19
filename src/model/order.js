@@ -2,16 +2,51 @@ import { Timestamp, collection, doc, addDoc, getDoc, updateDoc } from "firebase/
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { db } from "../logic/fb";
 
+function partsToFirestore(parts) {
+  // TODO purge db
+  if (!parts) return []
+
+  return parts.map((part) => {
+    return {
+      name: part.name,
+      price: part.price,
+      deliveryDate: Timestamp.fromDate(part.deliveryDate),
+    }
+  })
+}
+
+function partsFromFirestore(parts) {
+  // TODO purge db
+  if (!parts) return []
+
+  return parts.map((part) => {
+    return {
+      name: part.name,
+      price: part.price,
+      deliveryDate: part.deliveryDate.toDate(),
+    }
+  })
+}
+
+export function partsCost(parts) {
+  return parts.reduce((acc, part) => acc + parseFloat(part.price), 0)
+}
+
+export function partsMaxDate(parts) {
+  return parts.reduce((acc, part) => new Date(Math.max(acc, part.deliveryDate)), 0)
+}
+
 export const orderConverter = {
   toFirestore: order => {
     return {
       car: order.car,
       client: order.client,
-      cost: order.cost,
+      // cost: order.cost,
       profit: order.profit,
       status: order.status,
       dueDate: Timestamp.fromDate(order.dueDate),
       description: order.description,
+      parts: partsToFirestore(order.parts),
     };
   },
   fromFirestore: (snapshot, options) => {
@@ -20,11 +55,12 @@ export const orderConverter = {
       id: snapshot.id,
       car: data.car,
       client: data.client,
-      cost: data.cost,
+      // cost: data.cost,
       profit: data.profit,
       status: data.status,
       dueDate: data.dueDate.toDate(),
       description: data.description,
+      parts: partsFromFirestore(data.parts),
     };
   },
 };
