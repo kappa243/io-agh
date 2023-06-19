@@ -16,7 +16,6 @@ import EditOrder from "./EditOrder";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import PartListItem from "@/app/mechanic/home/PartListItem";
-import {mailUpdateStatus} from "@/app/sendMail";
 
 const OrderDetails = ({ order }) => {
   const [isCopied, setIsCopied] = useState(false);
@@ -29,7 +28,6 @@ const OrderDetails = ({ order }) => {
   const handleStatusChange = (status) => {
     order.status = status;
     updateOrder(order);
-    mailUpdateStatus(order.client.email, order.id, orderStatusText[status])
   };
 
   const handleCopyClick = () => {

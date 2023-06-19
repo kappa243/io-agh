@@ -12,7 +12,6 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { useForm } from "react-hook-form";
 import { addOrder } from "@/model/order";
 import "@/styles/spinner.css";
-import {mailCreateOrder} from "@/app/sendMail";
 
 
 const AddOrder = () => {
@@ -38,7 +37,7 @@ const AddOrder = () => {
 
   const submitOrder = useCallback(async (data) => {
     if (isSubmitting) return;
-    let doc = await addOrder({
+    await addOrder({
       car: {
         model: data.carModel,
         year: data.carProductionYear,
@@ -59,8 +58,6 @@ const AddOrder = () => {
       description: data.description,
       parts: []
     });
-
-    await mailCreateOrder(data.email, doc.id)
   }, [isSubmitting]);
 
   useEffect(() => {
