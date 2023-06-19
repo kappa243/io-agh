@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from "react";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import { Badge } from "react-bootstrap";
-import {getOrder, orderStatusText, orderStatusColor, partsMaxDate} from "@/model/order";
+import {getOrder, orderStatusText, orderStatusColor, partsMaxDate, partsCost} from "@/model/order";
 import PartListItem from "@/app/mechanic/home/PartListItem";
 import Col from "react-bootstrap/Col";
 
@@ -78,7 +78,7 @@ const ClientOrderPage = () => {
               ))}
               <Card.Text>
                 <strong>Całkowity koszt naprawy: </strong>
-                {Number(order.partsCost + parseFloat(order.profit)).toFixed(2)} zł
+                {Number(partsCost(order.parts) + parseFloat(order.profit)).toFixed(2)} zł
               </Card.Text>
               <Card.Text>
                 <strong>Dostawa ostatniej części: </strong>
