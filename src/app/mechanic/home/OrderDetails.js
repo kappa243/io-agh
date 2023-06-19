@@ -11,13 +11,11 @@ import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import { BiCopy } from "react-icons/bi";
 import {FaCheck, FaPlus} from "react-icons/fa";
-import {addOrder, orderStatusColor, orderStatusText, updateOrder, partsCost, partsMaxDate} from "@/model/order";
+import {orderStatusColor, orderStatusText, updateOrder, partsCost, partsMaxDate} from "@/model/order";
 import EditOrder from "./EditOrder";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
-import OrderListItem from "@/app/mechanic/home/OrderListItem";
 import PartListItem from "@/app/mechanic/home/PartListItem";
-import {Timestamp} from "firebase/firestore";
 
 const OrderDetails = ({ order }) => {
   const [isCopied, setIsCopied] = useState(false);

@@ -27,7 +27,7 @@ const EditOrder = (props) => {
       lastName: props.order.client.lastName,
       phoneNumber: props.order.client.phoneNumber,
       email: props.order.client.email,
-      repairCost: props.order.cost,
+      // repairCost: props.order.cost,
       profit: props.order.profit,
       dueDate: props.order.dueDate.toISOString().substring(0, 10),
       dueTime : props.order.dueDate.toLocaleTimeString("pl-PL", {
@@ -49,7 +49,7 @@ const EditOrder = (props) => {
     props.order.client.lastName = data.lastName;
     props.order.client.phoneNumber = data.phoneNumber;
     props.order.client.email = data.email;
-    props.order.cost = data.repairCost;
+    // props.order.cost = data.repairCost;
     props.order.profit = data.profit;
     props.order.dueDate = new Date(data.dueDate + "T" + data.dueTime);
     props.order.description = data.description;
@@ -283,39 +283,6 @@ const EditOrder = (props) => {
             </Row>
             <Form.Label className="mt-3">Dane zlecenia</Form.Label>
             <Row className="g-2">
-              <Col>
-                <Form.Group controlId="formRepairCost">
-                  <InputGroup>
-                    <FloatingLabel label="Koszt naprawy" >
-                      <Form.Control
-                        required
-                        type="number"
-                        name="repairCost"
-                        placeholder="Koszt naprawy"
-                        min="0"
-                        step="0.01"
-                        isInvalid={errors.repairCost}
-                        isValid={isSubmitted && !errors.repairCost}
-                        {...register("repairCost", {
-                          required: "Wymagane",
-                          min: {
-                            value: 0,
-                            message: "Koszt naprawy musi być większy niż 0",
-                          },
-                          pattern: {
-                            value: /^\d+(\.\d{1,2})?$/,
-                            message: "Niepoprawny format",
-                          },
-                        })}
-                      />
-                    </FloatingLabel>
-                    <InputGroup.Text>zł</InputGroup.Text>
-                  </InputGroup>
-                  <Form.Control.Feedback style={{ display: "block" }} type="invalid">
-                    {errors.repairCost?.message}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
               <Col>
                 <Form.Group controlId="formProfit">
                   <InputGroup>
