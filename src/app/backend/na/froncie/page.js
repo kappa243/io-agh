@@ -1,22 +1,18 @@
 'use client';
 
 import { useCallback, useState } from "react";
+import {sendMail} from "@/app/sendMail";
 
 export default function BackendNaFroncie() {
   const [resp, setResp] = useState("none");
 
   const handleClick = useCallback(async () => {
-    const res = await fetch('/backend/na/froncie/sendMail', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        message: 'xd',
-      }),
-    });
-    const data = await res.json();
-    setResp(JSON.stringify(data));
+    setResp("waiting...")
+    let data = await sendMail("norbertzpilicy@gmail.com", "hello there");
+    if (data !== "ok")
+      setResp("failed: " + data)
+    else
+      setResp("ok")
   }, []);
 
   return (
