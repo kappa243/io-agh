@@ -1,6 +1,6 @@
 'use client';
 
-import {useCallback, useState} from "react";
+import {useCallback, useState, useEffect} from "react";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -12,6 +12,7 @@ import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import { BiCopy } from "react-icons/bi";
 import {FaCheck, FaPlus} from "react-icons/fa";
 import {addOrder, orderStatusColor, orderStatusText, updateOrder, partsCost, partsMaxDate} from "@/model/order";
+import EditOrder from "./EditOrder";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import OrderListItem from "@/app/mechanic/home/OrderListItem";
@@ -20,6 +21,11 @@ import {Timestamp} from "firebase/firestore";
 
 const OrderDetails = ({ order }) => {
   const [isCopied, setIsCopied] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    setIsEditing(false);
+  }, [order]);
 
   const handleStatusChange = (status) => {
     order.status = status;
@@ -44,8 +50,22 @@ const OrderDetails = ({ order }) => {
 
     updateOrder(order);
   });
+  
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
 
-  return ( 
+  const handleSaveEdit = () => {
+    setIsEditing(false);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+  };
+
+  return (
+    <>
+      {isEditing ? (<EditOrder order={order} onSave={handleSaveEdit} onCancel={handleCancelEdit}/>) : (
     <Card>
       <Card.Header>
         <Row className="align-items-center">
@@ -55,7 +75,7 @@ const OrderDetails = ({ order }) => {
             <Card.Subtitle className="text-muted">{order.car.year}</Card.Subtitle>
           </Col>
           <Col className="d-flex flex-row-reverse gap-2">
-            <Button>Edytuj</Button>
+            <Button onClick={handleEditClick}>Edytuj</Button>
             <Dropdown as={ButtonGroup} style={{ width: "180px" }}>
               <DropdownToggle variant={orderStatusColor[order.status]} className="w-100">
                 {orderStatusText[order.status]}
@@ -166,7 +186,8 @@ const OrderDetails = ({ order }) => {
           </Col>
         </Row>
       </Form>
-    </Card>
+    </Card>)}
+    </>
   );
 };
 
