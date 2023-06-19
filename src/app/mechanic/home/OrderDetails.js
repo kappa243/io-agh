@@ -144,6 +144,8 @@ const OrderDetails = ({ order }) => {
                   type="number"
                   name="formPartPrice"
                   placeholder="Cena"
+                  min="0"
+                  step="0.01"
               />
             </FloatingLabel>
           </Col>
