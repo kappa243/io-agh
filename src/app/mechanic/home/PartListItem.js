@@ -21,7 +21,7 @@ const PartListItem = ({ part }) => {
           </Col>
           <Col>
             <Card.Text>
-              <strong>Cena:</strong> {part.price} km
+              <strong>Cena:</strong> {Number(part.price).toFixed(2)} zł
             </Card.Text>
           </Col>
           <Col>
