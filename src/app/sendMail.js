@@ -18,7 +18,7 @@ export async function sendMail(to, message) {
   return "ok"
 }
 
-let prefix = "http://localhost:3000"
+let prefix = "https://ioioio.vercel.app"
 let page = "client/order?orderId="
 
 function linkTo(id) {
