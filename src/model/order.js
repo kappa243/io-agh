@@ -1,8 +1,9 @@
-import { Timestamp, collection, doc, addDoc, getDoc, updateDoc } from "firebase/firestore";
+import { Timestamp, collection, doc, addDoc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { db } from "../logic/fb";
 
 function partsToFirestore(parts) {
+  if (!parts) return []
   return parts.map((part) => {
     return {
       name: part.name,
@@ -13,6 +14,7 @@ function partsToFirestore(parts) {
 }
 
 function partsFromFirestore(parts) {
+  if (!parts) return []
   return parts.map((part) => {
     return {
       name: part.name,
@@ -97,4 +99,7 @@ export const getOrder = async id => {
 // To update modify order fields in React app and pass order here
 export const updateOrder = async order => {
   await updateDoc(doc(collection(db, "orders").withConverter(orderConverter), order.id), order);
+};
+export const deleteOrder = async order => {
+  await deleteDoc(doc(db, "orders", order.id));
 };

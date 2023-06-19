@@ -37,6 +37,10 @@ const MechanicHomePage = () => {
 
   const email = useUserEmail();
 
+  function deselectOrder() {
+    setSelectedOrder(null);
+  }
+
   return (
     <>
       <Navbar className="sticky-top" style={{top: "0", height: "6rem"}} bg="primary">
@@ -68,7 +72,7 @@ const MechanicHomePage = () => {
            </Col>
           <Col>
             <div className="sticky-top" style={{ top: "calc(6rem + 16px)" }}>
-              {selectedOrder && <OrderDetails order={selectedOrder} />}
+              {selectedOrder && <OrderDetails order={selectedOrder} deselectOrder={deselectOrder} />}
               {addOrderVisible && <AddOrder />}
             </div>
           </Col>
