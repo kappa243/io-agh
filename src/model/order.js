@@ -3,6 +3,9 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import { db } from "../logic/fb";
 
 function partsToFirestore(parts) {
+  // TODO purge db
+  if (!parts) return []
+
   return parts.map((part) => {
     return {
       name: part.name,
@@ -13,6 +16,9 @@ function partsToFirestore(parts) {
 }
 
 function partsFromFirestore(parts) {
+  // TODO purge db
+  if (!parts) return []
+
   return parts.map((part) => {
     return {
       name: part.name,
@@ -88,7 +94,7 @@ export const useGetOrders = () => {
 };
 
 export const addOrder = async order => {
-  return await addDoc(collection(db, "orders").withConverter(orderConverter), order);
+  await addDoc(collection(db, "orders").withConverter(orderConverter), order);
 };
 
 export const getOrder = async id => {
