@@ -10,15 +10,15 @@ import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import { BiCopy } from "react-icons/bi";
-import {FaCheck, FaPlus} from "react-icons/fa";
-import {orderStatusColor, orderStatusText, updateOrder, partsCost, partsMaxDate} from "@/model/order";
+import {FaCheck, FaMinus, FaPlus} from "react-icons/fa";
+import {orderStatusColor, orderStatusText, updateOrder, partsCost, partsMaxDate, deleteOrder} from "@/model/order";
 import EditOrder from "./EditOrder";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import PartListItem from "@/app/mechanic/home/PartListItem";
 import {mailUpdateStatus} from "@/app/sendMail";
 
-const OrderDetails = ({ order }) => {
+const OrderDetails = ({ order, deselectOrder }) => {
   const [isCopied, setIsCopied] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -37,6 +37,11 @@ const OrderDetails = ({ order }) => {
     navigator.clipboard.writeText(orderLink);
     setIsCopied(true);
     setTimeout(() => setIsCopied(false), 5000);
+  };
+
+  const handleDeleteClick = () => {
+    deleteOrder(order);
+    deselectOrder();
   };
 
   const submitPart = useCallback((event) => {
@@ -88,6 +93,9 @@ const OrderDetails = ({ order }) => {
             </Dropdown>
             <Button variant="light" onClick={handleCopyClick} disabled={isCopied}>
               {isCopied ? <FaCheck /> : <BiCopy />}
+            </Button>
+            <Button variant="light" onClick={handleDeleteClick} disabled={isCopied}>
+              {<FaMinus />}
             </Button>
           </Col>
         </Row>
