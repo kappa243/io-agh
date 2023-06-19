@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from "react";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import { Badge } from "react-bootstrap";
-import { getOrder, orderStatusText, orderStatusColor } from "@/model/order";
+import {getOrder, orderStatusText, orderStatusColor, partsMaxDate} from "@/model/order";
 import PartListItem from "@/app/mechanic/home/PartListItem";
 import Col from "react-bootstrap/Col";
 
@@ -80,17 +80,17 @@ const ClientOrderPage = () => {
                 <strong>Całkowity koszt naprawy: </strong>
                 {Number(order.partsCost + parseFloat(order.profit)).toFixed(2)} zł
               </Card.Text>
-              {/*<Card.Text>*/}
-              {/*  <strong>Dostawa ostatniej części: </strong>*/}
-              {/*  /!*{order.partsLastDate.toLocaleString("pl-PL", {*!/*/}
-              {/*  /!*  year: "numeric",*!/*/}
-              {/*  /!*  month: "2-digit",*!/*/}
-              {/*  /!*  day: "2-digit",*!/*/}
-              {/*  /!*  hour: "2-digit",*!/*/}
-              {/*  /!*  minute: "2-digit"*!/*/}
-              {/*  /!*})}*!/*/}
-              {/*  /!*{order.partsLastDate}*!/*/}
-              {/*</Card.Text>*/}
+              <Card.Text>
+                <strong>Dostawa ostatniej części: </strong>
+                {partsMaxDate(order.parts).toLocaleString("pl-PL", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit"
+                })}
+                {order.partsLastDate}
+              </Card.Text>
             </Card.Body>
           </Card>
         </Container>

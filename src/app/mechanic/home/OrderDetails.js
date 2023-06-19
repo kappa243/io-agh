@@ -11,7 +11,7 @@ import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import { BiCopy } from "react-icons/bi";
 import {FaCheck, FaPlus} from "react-icons/fa";
-import {addOrder, orderStatusColor, orderStatusText, updateOrder} from "@/model/order";
+import {addOrder, orderStatusColor, orderStatusText, updateOrder, partsCost, partsMaxDate} from "@/model/order";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import OrderListItem from "@/app/mechanic/home/OrderListItem";
@@ -39,7 +39,7 @@ const OrderDetails = ({ order }) => {
     order.parts.push({
       name: data.formPartName.value,
       price: data.formPartPrice.value,
-      deliveryDate: Timestamp.fromDate(new Date(data.formPartDeliveryDate.value))
+      deliveryDate: new Date(data.formPartDeliveryDate.value)
     })
 
     updateOrder(order);
@@ -96,13 +96,13 @@ const OrderDetails = ({ order }) => {
             <strong>Zysk:</strong> {Number(order.profit).toFixed(2)} zł
           </Card.Text>
           <Card.Text>
-            <strong>Całkowity koszt zamówienia:</strong> {Number(order.partsCost + parseFloat(order.profit)).toFixed(2)} zł
+            <strong>Całkowity koszt zamówienia:</strong> {Number(partsCost(order.parts) + parseFloat(order.profit)).toFixed(2)} zł
           </Card.Text>
           <Card.Text>
             <strong>Status:</strong> {orderStatusText[order.status]}
           </Card.Text>
           <Card.Text>
-            <strong>Termin realizacji:</strong> {order.dueDate.toLocaleString("pl-PL", {
+            <strong>Termin dostawy ostatniej części:</strong> {partsMaxDate(order.parts).toLocaleString("pl-PL", {
               year: "numeric",
               month: "2-digit",
               day: "2-digit",

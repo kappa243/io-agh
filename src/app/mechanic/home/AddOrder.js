@@ -27,7 +27,7 @@ const AddOrder = () => {
       lastName: "",
       phoneNumber: "",
       email: "",
-      repairCost: "0",
+      // repairCost: "0",
       profit: "0",
       dueDate: new Date().toISOString().split("T")[0],
       description: "",
@@ -51,7 +51,7 @@ const AddOrder = () => {
         phoneNumber: data.phoneNumber,
         email: data.email,
       },
-      cost: data.repairCost,
+      // cost: data.repairCost,
       profit: data.profit,
       status: "IN_PROGRESS",
       dueDate: new Date(data.dueDate + "T" + data.dueTime), // get Date instance instead of formatted string
@@ -286,39 +286,6 @@ const AddOrder = () => {
             </Row>
             <Form.Label className="mt-3">Dane zlecenia</Form.Label>
             <Row className="g-2">
-              <Col>
-                <Form.Group controlId="formRepairCost">
-                  <InputGroup>
-                    <FloatingLabel label="Koszt naprawy" >
-                      <Form.Control
-                        required
-                        type="number"
-                        name="repairCost"
-                        placeholder="Koszt naprawy"
-                        min="0"
-                        step="0.01"
-                        isInvalid={errors.repairCost}
-                        isValid={isSubmitted && !errors.repairCost}
-                        {...register("repairCost", {
-                          required: "Wymagane",
-                          min: {
-                            value: 0,
-                            message: "Koszt naprawy musi być większy niż 0",
-                          },
-                          pattern: {
-                            value: /^\d+(\.\d{1,2})?$/,
-                            message: "Niepoprawny format",
-                          },
-                        })}
-                      />
-                    </FloatingLabel>
-                    <InputGroup.Text>zł</InputGroup.Text>
-                  </InputGroup>
-                  <Form.Control.Feedback style={{ display: "block" }} type="invalid">
-                    {errors.repairCost?.message}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
               <Col>
                 <Form.Group controlId="formProfit">
                   <InputGroup>

@@ -26,13 +26,12 @@ const PartListItem = ({ part }) => {
           </Col>
           <Col>
             <Card.Text>
-              <strong>Termin dostawy:</strong> {part.deliveryDate.toDate().toLocaleString("pl-PL", {
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-              hour: "2-digit",
-              minute: "2-digit"
-            })}
+              <strong>Termin dostawy:</strong>
+              {part.deliveryDate.toLocaleString("pl-PL", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              })}
             </Card.Text>
           </Col>
         </Row>
