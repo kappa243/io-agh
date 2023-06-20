@@ -33,7 +33,7 @@ const MechanicHomePage = () => {
 
   const [signOut, ,] = useSignOut(auth);
 
-  const orders = useGetOrders().sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime());
+  const orders = useGetOrders().sort((a, b) => a.dueDate - b.dueDate);
 
   const email = useUserEmail();
 

@@ -55,9 +55,7 @@ const OrderListItem = ({ order, onClick }) => {
             <Card.Text>{order.dueDate.toLocaleString("pl-PL", {
               year: "numeric",
               month: "2-digit",
-              day: "2-digit",
-              hour: "2-digit",
-              minute: "2-digit"
+              day: "2-digit"
             })}</Card.Text>
           </Col>
         </Row>
