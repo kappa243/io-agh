@@ -5,16 +5,12 @@ import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import { ButtonGroup, Dropdown } from "react-bootstrap";
-import DropdownItem from "react-bootstrap/esm/DropdownItem";
-import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
-import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
-import { BiCopy } from "react-icons/bi";
 import { FaCheck, FaMinus, FaPlus } from "react-icons/fa";
 import { orderStatusColor, orderStatusText, updateOrder, partsCost, partsMaxDate, deleteOrder } from "@/model/order";
 import EditOrder from "./EditOrder";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
+import { useForm } from "react-hook-form";
 import PartListItem from "@/app/mechanic/home/PartListItem";
 import { mailUpdateStatus } from "@/app/sendMail";
 
@@ -23,26 +19,25 @@ const AddPart = ({ order }) => {
     mode: "onChange",
     defaultValues: {
       name: "",
-      profit: "0",
+      price: "0",
       deliveryDate: new Date().toISOString().split("T")[0],
     }
   });
 
-  const submitPart = useCallback((event) => {
-    event.preventDefault();
-    let data = event.target.elements;
+  const submitPart = useCallback(async (data) => {
+    if (isSubmitting) return;
     order.parts.push({
-      name: data.formPartName.value,
-      price: data.formPartPrice.value,
-      deliveryDate: new Date(data.formPartDeliveryDate.value)
+      name: data.formPartName,
+      price: data.formPartPrice,
+      deliveryDate: new Date(data.formPartDeliveryDate)
     });
 
     updateOrder(order);
-  });
+  }, [isSubmitting]);
 
   return (
     <>
-      <Form noValidate onSubmit={submitPart}>
+      <Form noValidate onSubmit={handleSubmit(submitPart)}>
         <Row className="g-2">
           <Col>
             <FloatingLabel label="Nazwa" controlId="formPartName">
@@ -51,7 +46,15 @@ const AddPart = ({ order }) => {
                 type="text"
                 name="formPartName"
                 placeholder="Nazwa"
+                isInvalid={errors.formPartName}
+                isValid={isSubmitted && !errors.formPartName}
+                {...register("formPartName", {
+                  required: "Wymagane"
+                })}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.formPartName?.message}
+              </Form.Control.Feedback>
             </FloatingLabel>
           </Col>
           <Col>
@@ -63,7 +66,15 @@ const AddPart = ({ order }) => {
                 placeholder="Cena"
                 min="0"
                 step="0.01"
+                isInvalid={errors.formPartPrice}
+                isValid={isSubmitted && !errors.formPartPrice}
+                {...register("formPartPrice", {
+                  required: "Wymagane"
+                })}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.formPartPrice?.message}
+              </Form.Control.Feedback>
             </FloatingLabel>
           </Col>
           <Col>
@@ -73,7 +84,20 @@ const AddPart = ({ order }) => {
                 type="date"
                 name="formPartDeliveryDate"
                 placeholder="Termin dostawy"
+                isInvalid={errors.formPartDeliveryDate}
+                isValid={isSubmitted && !errors.formPartDeliveryDate}
+                {...register("formPartDeliveryDate", {
+                  required: "Wymagane",
+                  validate: (value) => {
+                    const today = new Date().setHours(0, 0, 0, 0);
+                    const date = new Date(value);
+                    return date >= today || "Termin nie może poprzedzać dzisiejszej daty";
+                  }
+                })}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.formPartDeliveryDate?.message}
+              </Form.Control.Feedback>
             </FloatingLabel>
           </Col>
           <Col>
