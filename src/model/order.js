@@ -63,7 +63,7 @@ export const orderConverter = {
 
 export const orderStatusText = {
   IN_INSPECTION: "W trakcie inspekcji",
-  AWAITING_CHOICE: "Oczekuje na wybór części",
+  AWAITING_CHOICE: "Wybór części",
   AWAITING_PARTS: "Oczekuje na części",
   IN_PROGRESS: "W trakcie naprawy",
   READY: "Gotowe do odbioru",
