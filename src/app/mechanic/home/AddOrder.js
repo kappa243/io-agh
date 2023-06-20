@@ -12,7 +12,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { useForm } from "react-hook-form";
 import { addOrder } from "@/model/order";
 import "@/styles/spinner.css";
-import {mailCreateOrder} from "@/app/sendMail";
+import { mailCreateOrder } from "@/app/sendMail";
 
 
 const AddOrder = () => {
@@ -28,7 +28,6 @@ const AddOrder = () => {
       lastName: "",
       phoneNumber: "",
       email: "",
-      // repairCost: "0",
       profit: "0",
       dueDate: new Date().toISOString().split("T")[0],
       description: "",
@@ -60,7 +59,7 @@ const AddOrder = () => {
       parts: []
     });
 
-    await mailCreateOrder(data.email, doc.id)
+    await mailCreateOrder(data.email, doc.id);
   }, [isSubmitting]);
 
   useEffect(() => {
