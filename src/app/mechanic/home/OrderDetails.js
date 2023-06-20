@@ -132,7 +132,7 @@ const OrderDetails = ({ order, deselectOrder }) => {
               <strong>Opis:</strong> {order.description}
             </Card.Text>
           </Card.Body>
-          <Col>
+          <Card.Header>
             <Card.Text><strong className="text-xl">Lista części</strong></Card.Text>
             {order.parts.map((part) => (
               <PartListItem
@@ -141,7 +141,7 @@ const OrderDetails = ({ order, deselectOrder }) => {
               // onClick={() => handleSelectOrder(order)}
               />
             ))}
-          </Col>
+          </Card.Header>
           <AddPart order={order} />
 
         </Card>)}

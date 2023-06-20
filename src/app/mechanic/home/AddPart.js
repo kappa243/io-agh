@@ -37,76 +37,78 @@ const AddPart = ({ order }) => {
 
   return (
     <>
-      <Form noValidate onSubmit={handleSubmit(submitPart)}>
-        <Row className="g-2">
-          <Col>
-            <FloatingLabel label="Nazwa" controlId="formPartName">
-              <Form.Control
-                required
-                type="text"
-                name="formPartName"
-                placeholder="Nazwa"
-                isInvalid={errors.formPartName}
-                isValid={isSubmitted && !errors.formPartName}
-                {...register("formPartName", {
-                  required: "Wymagane"
-                })}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.formPartName?.message}
-              </Form.Control.Feedback>
-            </FloatingLabel>
-          </Col>
-          <Col>
-            <FloatingLabel label="Cena" controlId="formPartPrice">
-              <Form.Control
-                required
-                type="number"
-                name="formPartPrice"
-                placeholder="Cena"
-                min="0"
-                step="0.01"
-                isInvalid={errors.formPartPrice}
-                isValid={isSubmitted && !errors.formPartPrice}
-                {...register("formPartPrice", {
-                  required: "Wymagane"
-                })}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.formPartPrice?.message}
-              </Form.Control.Feedback>
-            </FloatingLabel>
-          </Col>
-          <Col>
-            <FloatingLabel label="Termin dostawy" controlId="formPartDeliveryDate">
-              <Form.Control
-                required
-                type="date"
-                name="formPartDeliveryDate"
-                placeholder="Termin dostawy"
-                isInvalid={errors.formPartDeliveryDate}
-                isValid={isSubmitted && !errors.formPartDeliveryDate}
-                {...register("formPartDeliveryDate", {
-                  required: "Wymagane",
-                  validate: (value) => {
-                    const today = new Date().setHours(0, 0, 0, 0);
-                    const date = new Date(value);
-                    return date >= today || "Termin nie może poprzedzać dzisiejszej daty";
-                  }
-                })}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.formPartDeliveryDate?.message}
-              </Form.Control.Feedback>
-            </FloatingLabel>
-          </Col>
-          <Col>
-            <Button type="submit">
-              <FaPlus />
-            </Button>
-          </Col>
-        </Row>
-      </Form>
+      <Card.Body>
+        <Form noValidate onSubmit={handleSubmit(submitPart)}>
+          <Row className="g-2">
+            <Col>
+              <FloatingLabel label="Nazwa" controlId="formPartName">
+                <Form.Control
+                  required
+                  type="text"
+                  name="formPartName"
+                  placeholder="Nazwa"
+                  isInvalid={errors.formPartName}
+                  isValid={isSubmitted && !errors.formPartName}
+                  {...register("formPartName", {
+                    required: "Wymagane"
+                  })}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.formPartName?.message}
+                </Form.Control.Feedback>
+              </FloatingLabel>
+            </Col>
+            <Col>
+              <FloatingLabel label="Cena" controlId="formPartPrice">
+                <Form.Control
+                  required
+                  type="number"
+                  name="formPartPrice"
+                  placeholder="Cena"
+                  min="0"
+                  step="0.01"
+                  isInvalid={errors.formPartPrice}
+                  isValid={isSubmitted && !errors.formPartPrice}
+                  {...register("formPartPrice", {
+                    required: "Wymagane"
+                  })}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.formPartPrice?.message}
+                </Form.Control.Feedback>
+              </FloatingLabel>
+            </Col>
+            <Col>
+              <FloatingLabel label="Termin dostawy" controlId="formPartDeliveryDate">
+                <Form.Control
+                  required
+                  type="date"
+                  name="formPartDeliveryDate"
+                  placeholder="Termin dostawy"
+                  isInvalid={errors.formPartDeliveryDate}
+                  isValid={isSubmitted && !errors.formPartDeliveryDate}
+                  {...register("formPartDeliveryDate", {
+                    required: "Wymagane",
+                    validate: (value) => {
+                      const today = new Date().setHours(0, 0, 0, 0);
+                      const date = new Date(value);
+                      return date >= today || "Termin nie może poprzedzać dzisiejszej daty";
+                    }
+                  })}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.formPartDeliveryDate?.message}
+                </Form.Control.Feedback>
+              </FloatingLabel>
+            </Col>
+            <Col>
+              <Button type="submit">
+                <FaPlus />
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      </Card.Body >
     </>
   );
 };
