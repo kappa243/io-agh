@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Badge from "react-bootstrap/Badge";
 import daysUntil from "@/utils/dateConverter";
-import { orderStatusColor, orderStatusText } from "@/model/order";
+import { orderStatusColor, orderStatusText, partsCost,  } from "@/model/order";
 
 const OrderListItem = ({ order, onClick }) => {
 
@@ -38,7 +38,7 @@ const OrderListItem = ({ order, onClick }) => {
 
           <Col xs={2} className="d-flex flex-column align-items-start">
             <div className="fw-bold d-flex justify-content-between w-100 gap-2">
-              <Card.Text className="mb-0">{Number(order.cost).toFixed(2)}</Card.Text>
+              <Card.Text className="mb-0">{Number(partsCost(order.parts) + parseFloat(order.profit)).toFixed(2)}</Card.Text>
               <p className="mb-0">PLN</p>
             </div>
             <div className="d-flex justify-content-between w-100 gap-2">
