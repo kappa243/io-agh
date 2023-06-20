@@ -30,10 +30,6 @@ const EditOrder = (props) => {
       // repairCost: props.order.cost,
       profit: props.order.profit,
       dueDate: props.order.dueDate.toISOString().substring(0, 10),
-      dueTime : props.order.dueDate.toLocaleTimeString("pl-PL", {
-        hour: "2-digit",
-        minute: "2-digit"
-        }),
       description: props.order.description,
     }
   });
@@ -51,7 +47,7 @@ const EditOrder = (props) => {
     props.order.client.email = data.email;
     // props.order.cost = data.repairCost;
     props.order.profit = data.profit;
-    props.order.dueDate = new Date(data.dueDate + "T" + data.dueTime);
+    props.order.dueDate = new Date(data.dueDate);
     props.order.description = data.description;
     await updateOrder(props.order);
     props.onSave();
@@ -331,24 +327,6 @@ const EditOrder = (props) => {
                   />
                   <Form.Control.Feedback type="invalid">
                     {errors.dueDate?.message}
-                  </Form.Control.Feedback>
-                </FloatingLabel>
-              </Col>
-              <Col>
-                <FloatingLabel label="Termin realizacji" controlId="formDueTime">
-                  <Form.Control
-                    required
-                    type="time"
-                    name="dueTime"
-                    placeholder="Termin realizacji"
-                    isInvalid={errors.dueTime}
-                    isValid={isSubmitted && !errors.dueTime}
-                    {...register("dueTime", {
-                      required: "Wymagane",
-                    })}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.dueTime?.message}
                   </Form.Control.Feedback>
                 </FloatingLabel>
               </Col>
