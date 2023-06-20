@@ -13,7 +13,6 @@ function partsToFirestore(parts) {
   })
 }
 
-
 function partsFromFirestore(parts) {
   if (!parts) return []
   return parts.map((part) => {
