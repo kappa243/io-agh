@@ -10,56 +10,47 @@ import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import InputGroup from "react-bootstrap/InputGroup";
 import { useForm } from "react-hook-form";
-import { addOrder } from "@/model/order";
+import { updateOrder } from "@/model/order";
 import "@/styles/spinner.css";
-import { mailCreateOrder } from "@/app/sendMail";
 
 
-const AddOrder = () => {
+const EditOrder = (props) => {
   const { register, handleSubmit, reset, formState: { errors, isSubmitted, isSubmitting, isSubmitSuccessful } } = useForm({
     mode: "onChange",
     defaultValues: {
-      carModel: "",
-      carProductionYear: "",
-      carColor: "#000000",
-      carVINNumber: "",
-      carMileage: "0",
-      firstName: "",
-      lastName: "",
-      phoneNumber: "",
-      email: "",
-      profit: "0",
-      dueDate: new Date().toISOString().split("T")[0],
-      description: "",
-      parts: []
+      carModel: props.order.car.model,
+      carProductionYear: props.order.car.year,
+      carColor: props.order.car.color,
+      carVINNumber: props.order.car.vin,
+      carMileage: props.order.car.mileage,
+      firstName: props.order.client.firstName,
+      lastName: props.order.client.lastName,
+      phoneNumber: props.order.client.phoneNumber,
+      email: props.order.client.email,
+      // repairCost: props.order.cost,
+      profit: props.order.profit,
+      dueDate: props.order.dueDate.toISOString().substring(0, 10),
+      description: props.order.description,
     }
   });
 
   const submitOrder = useCallback(async (data) => {
     if (isSubmitting) return;
-    let doc = await addOrder({
-      car: {
-        model: data.carModel,
-        year: data.carProductionYear,
-        color: data.carColor,
-        vin: data.carVINNumber,
-        mileage: data.carMileage,
-      },
-      client: {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        phoneNumber: data.phoneNumber,
-        email: data.email,
-      },
-      // cost: data.repairCost,
-      profit: data.profit,
-      status: "IN_PROGRESS",
-      dueDate: new Date(data.dueDate), // get Date instance instead of formatted string
-      description: data.description,
-      parts: []
-    });
-
-    await mailCreateOrder(data.email, doc.id);
+    props.order.car.model = data.carModel;
+    props.order.car.year = data.carProductionYear;
+    props.order.car.color = data.carColor;
+    props.order.car.vin = data.carVINNumber;
+    props.order.car.mileage = data.carMileage;
+    props.order.client.firstName = data.firstName;
+    props.order.client.lastName = data.lastName;
+    props.order.client.phoneNumber = data.phoneNumber;
+    props.order.client.email = data.email;
+    // props.order.cost = data.repairCost;
+    props.order.profit = data.profit;
+    props.order.dueDate = new Date(data.dueDate);
+    props.order.description = data.description;
+    await updateOrder(props.order);
+    props.onSave();
   }, [isSubmitting]);
 
   useEffect(() => {
@@ -331,12 +322,7 @@ const AddOrder = () => {
                     isInvalid={errors.dueDate}
                     isValid={isSubmitted && !errors.dueDate}
                     {...register("dueDate", {
-                      required: "Wymagane",
-                      validate: (value) => {
-                        const today = new Date().setHours(0, 0, 0, 0);
-                        const date = new Date(value);
-                        return date >= today || "Termin nie może poprzedzać dzisiejszej daty";
-                      }
+                      required: "Wymagane"
                     })}
                   />
                   <Form.Control.Feedback type="invalid">
@@ -362,9 +348,8 @@ const AddOrder = () => {
                 {errors.description?.message}
               </Form.Control.Feedback>
             </FloatingLabel>
-            <Button variant="primary" type="submit" className="mt-3">
-              Zapisz zlecenie
-            </Button>
+            <Button variant="success" type="submit" className="mt-3">Zapisz</Button>
+            <Button variant="danger" className="mt-3 ms-3" onClick={props.onCancel}>Anuluj</Button>
           </Card.Body>
         </Card>
       </Form>
@@ -372,4 +357,4 @@ const AddOrder = () => {
   );
 };
 
-export default AddOrder;
+export default EditOrder;

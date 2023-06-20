@@ -5,7 +5,9 @@ import { useState, useEffect, useCallback } from "react";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import { Badge } from "react-bootstrap";
-import { getOrder, orderStatusText, orderStatusColor } from "@/model/order";
+import {getOrder, orderStatusText, orderStatusColor, partsMaxDate, partsCost} from "@/model/order";
+import PartListItem from "@/app/mechanic/home/PartListItem";
+import Col from "react-bootstrap/Col";
 
 
 /*
@@ -45,7 +47,7 @@ const ClientOrderPage = () => {
         <Container className="mt-3">
           <Card>
             <Card.Header>
-              <h2>Zlecenie {order.id}</h2>
+              <h2>Zlecenie: {order.car.model} {order.car.year}</h2>
             </Card.Header>
             <Card.Body>
               <Card.Text>
@@ -66,6 +68,26 @@ const ClientOrderPage = () => {
                 <Badge variant={orderStatusColor[order.status]}>
                   {orderStatusText[order.status]}
                 </Badge>
+              </Card.Text>
+              <Card.Text><strong className="text-xl">Lista części</strong></Card.Text>
+              {order.parts.map((part) => (
+                  <PartListItem
+                      key={part.id}
+                      part={part}
+                  />
+              ))}
+              <Card.Text>
+                <strong>Całkowity koszt naprawy: </strong>
+                {Number(partsCost(order.parts) + parseFloat(order.profit)).toFixed(2)} zł
+              </Card.Text>
+              <Card.Text>
+                <strong>Dostawa ostatniej części: </strong>
+                {partsMaxDate(order.parts).toLocaleString("pl-PL", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                })}
+                {order.partsLastDate}
               </Card.Text>
             </Card.Body>
           </Card>

@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
+import { motion } from "framer-motion";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { useGetOrders } from "@/model/order";
 import { auth } from "@/logic/fb";
@@ -32,9 +33,13 @@ const MechanicHomePage = () => {
 
   const [signOut, ,] = useSignOut(auth);
 
-  const orders = useGetOrders();
+  const orders = useGetOrders().sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime());
 
   const email = useUserEmail();
+
+  function deselectOrder() {
+    setSelectedOrder(null);
+  }
 
   return (
     <>
@@ -51,17 +56,23 @@ const MechanicHomePage = () => {
       <Container fluid className="mt-3">
         <Row>
           <Col xs="7" >
-            {orders.sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime()).map((order) => (
-              <OrderListItem
-                key={order.id}
-                order={order}
-                onClick={() => handleSelectOrder(order)}
-              />
-            ))}
-          </Col>
+             {orders.map((order, index) => (
+               <motion.div
+                 key={order.id}
+                 initial={{ opacity: 0, y: 20 }}
+                 animate={{ opacity: 1, y: 0, transition: { delay: index * 0.05 } }}
+                 transition={{ duration: 0.2 }}
+               >
+                 <OrderListItem
+                   order={order}
+                   onClick={() => handleSelectOrder(order)}
+                 />
+               </motion.div>
+             ))}
+           </Col>
           <Col>
             <div className="sticky-top" style={{ top: "calc(6rem + 16px)" }}>
-              {selectedOrder && <OrderDetails order={selectedOrder} />}
+              {selectedOrder && <OrderDetails order={selectedOrder} deselectOrder={deselectOrder} />}
               {addOrderVisible && <AddOrder />}
             </div>
           </Col>
