@@ -54,7 +54,7 @@ const AddOrder = () => {
       // cost: data.repairCost,
       profit: data.profit,
       status: "IN_PROGRESS",
-      dueDate: new Date(data.dueDate + "T" + data.dueTime), // get Date instance instead of formatted string
+      dueDate: new Date(data.dueDate), // get Date instance instead of formatted string
       description: data.description,
       parts: []
     });
@@ -341,24 +341,6 @@ const AddOrder = () => {
                   />
                   <Form.Control.Feedback type="invalid">
                     {errors.dueDate?.message}
-                  </Form.Control.Feedback>
-                </FloatingLabel>
-              </Col>
-              <Col>
-                <FloatingLabel label="Termin realizacji" controlId="formDueTime">
-                  <Form.Control
-                    required
-                    type="time"
-                    name="dueTime"
-                    placeholder="Termin realizacji"
-                    isInvalid={errors.dueTime}
-                    isValid={isSubmitted && !errors.dueTime}
-                    {...register("dueTime", {
-                      required: "Wymagane",
-                    })}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.dueTime?.message}
                   </Form.Control.Feedback>
                 </FloatingLabel>
               </Col>
